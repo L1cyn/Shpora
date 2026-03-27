@@ -1,0 +1,1733 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Python Mega Docs — подробная документация на русском</title>
+  <style>
+    :root{
+      --bg:#0b1020;
+      --bg2:#0f172a;
+      --panel:#111827;
+      --text:#e5e7eb;
+      --muted:#94a3b8;
+      --accent:#38bdf8;
+      --ok:#22c55e;
+      --warn:#f59e0b;
+      --danger:#ef4444;
+      --border:#334155;
+      --code:#0a0f1f;
+      --shadow:0 12px 28px rgba(0,0,0,.28);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(56,189,248,.08), transparent 20%),
+        radial-gradient(circle at bottom left, rgba(34,197,94,.06), transparent 20%),
+        linear-gradient(180deg,var(--bg),var(--bg2));
+      color:var(--text);
+      line-height:1.72;
+    }
+    .layout{display:grid;grid-template-columns:330px 1fr;min-height:100vh}
+    aside{
+      position:sticky;top:0;height:100vh;overflow:auto;
+      background:rgba(2,6,23,.84);backdrop-filter:blur(10px);
+      border-right:1px solid var(--border);
+      padding:20px 18px 28px;
+    }
+    .brand{
+      background:linear-gradient(135deg,#0ea5e9,#22c55e);
+      color:#fff;padding:18px;border-radius:22px;box-shadow:var(--shadow);margin-bottom:16px;
+    }
+    .brand h1{margin:0 0 8px;font-size:24px;line-height:1.15}
+    .brand p{margin:0;font-size:14px;color:rgba(255,255,255,.92)}
+    .search,.theme-btn{
+      width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--border);
+      background:#0b1220;color:var(--text);outline:none;margin:10px 0;
+    }
+    .theme-btn{cursor:pointer}
+    nav h3{
+      margin:18px 0 10px;font-size:12px;text-transform:uppercase;
+      letter-spacing:.1em;color:var(--muted);
+    }
+    nav a{
+      display:block;color:var(--text);text-decoration:none;
+      padding:10px 12px;border-radius:12px;font-size:14px;margin:3px 0;transition:.2s;
+    }
+    nav a:hover{background:rgba(56,189,248,.12);transform:translateX(2px)}
+    main{padding:34px;max-width:1320px;width:100%}
+    .hero{
+      background:
+        radial-gradient(circle at right top, rgba(56,189,248,.18), transparent 35%),
+        radial-gradient(circle at left bottom, rgba(34,197,94,.12), transparent 30%),
+        linear-gradient(135deg,#111827,#0f172a);
+      border:1px solid var(--border);
+      border-radius:28px;padding:32px;box-shadow:var(--shadow);margin-bottom:26px;
+    }
+    .hero h1{margin:0 0 10px;font-size:42px;line-height:1.1}
+    .hero p{margin:10px 0;color:#dbe4f0;font-size:18px;max-width:980px}
+    .badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+    .badge{
+      background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.28);
+      color:#dbeafe;padding:8px 12px;border-radius:999px;font-size:13px;
+    }
+    section{
+      margin:22px 0;padding:28px;background:rgba(15,23,42,.82);
+      border:1px solid var(--border);border-radius:24px;box-shadow:var(--shadow);
+    }
+    section h2{margin-top:0;font-size:31px;line-height:1.2}
+    section h3{margin-top:28px;font-size:24px}
+    section h4{margin-top:22px;font-size:19px;color:#f1f5f9}
+    p,li{font-size:16px;color:#dbe4f0}
+    ul,ol{padding-left:24px}
+    .grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+    .card{background:#111827;border:1px solid var(--border);border-radius:18px;padding:18px}
+    .note,.tip,.warn,.danger{
+      padding:16px 18px;border-radius:16px;margin:16px 0;border:1px solid var(--border);
+    }
+    .note{background:rgba(56,189,248,.10);border-color:rgba(56,189,248,.26)}
+    .tip{background:rgba(34,197,94,.10);border-color:rgba(34,197,94,.26)}
+    .warn{background:rgba(245,158,11,.10);border-color:rgba(245,158,11,.26)}
+    .danger{background:rgba(239,68,68,.10);border-color:rgba(239,68,68,.26)}
+    pre{
+      position:relative;background:var(--code);border:1px solid #1f2a44;color:#e2e8f0;
+      border-radius:18px;padding:18px;overflow:auto;line-height:1.6;font-size:14px;
+    }
+    code{font-family:Consolas,Monaco,"Courier New",monospace}
+    .copy-btn{
+      position:absolute;top:10px;right:10px;border:none;background:#1d4ed8;color:white;
+      padding:6px 10px;border-radius:10px;cursor:pointer;font-size:12px;
+    }
+    .inline-code{
+      display:inline-block;background:#111827;border:1px solid var(--border);
+      padding:2px 8px;border-radius:8px;font-family:Consolas,monospace;font-size:.95em;
+    }
+    table{
+      width:100%;border-collapse:collapse;margin:16px 0;border:1px solid var(--border);
+      overflow:hidden;border-radius:16px;
+    }
+    th,td{padding:13px 15px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+    th{background:#0b1220;color:#f8fafc}
+    tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+    .footer{margin:30px 0 6px;text-align:center;color:var(--muted);font-size:14px}
+    .light{
+      --bg:#eef2ff;--bg2:#f8fafc;--panel:#fff;--text:#0f172a;--muted:#475569;
+      --accent:#0284c7;--ok:#16a34a;--warn:#d97706;--danger:#dc2626;--border:#cbd5e1;--code:#f8fafc;
+    }
+    .light p,.light li{color:#1e293b}
+    @media (max-width:1100px){
+      .layout{grid-template-columns:1fr}
+      aside{position:relative;height:auto}
+      main{padding:18px}
+      .grid-2,.grid-3{grid-template-columns:1fr}
+      .hero h1{font-size:32px}
+    }
+  </style>
+</head>
+<body>
+<div class="layout">
+  <aside>
+    <div class="brand">
+      <h1>Python Mega Docs</h1>
+      <p>Большая подробная документация на русском с примерами, пояснениями и шпаргалкой по темам.</p>
+    </div>
+
+    <input class="search" id="searchInput" type="text" placeholder="Поиск по странице..." />
+    <button class="theme-btn" id="themeBtn">Переключить тему</button>
+
+    <nav>
+      <h3>Введение</h3>
+      <a href="#intro">Что такое Python</a>
+      <a href="#install">Установка</a>
+      <a href="#run">Запуск программ</a>
+      <a href="#first-program">Первая программа</a>
+      <a href="#syntax">Синтаксис и стиль</a>
+
+      <h3>Основа языка</h3>
+      <a href="#variables">Переменные и типы</a>
+      <a href="#numbers">Числа</a>
+      <a href="#bools">Булева логика</a>
+      <a href="#io">Ввод и вывод</a>
+      <a href="#operators">Операторы</a>
+      <a href="#conditions">Условия</a>
+      <a href="#loops">Циклы</a>
+
+      <h3>Структуры данных</h3>
+      <a href="#strings">Строки</a>
+      <a href="#lists">Списки</a>
+      <a href="#tuples">Кортежи</a>
+      <a href="#sets">Множества</a>
+      <a href="#dicts">Словари</a>
+      <a href="#comprehensions">Comprehensions</a>
+
+      <h3>Функции и продвинутое</h3>
+      <a href="#functions">Функции</a>
+      <a href="#scope">Область видимости</a>
+      <a href="#recursion">Рекурсия</a>
+      <a href="#lambda">Lambda / map / filter</a>
+      <a href="#iterators">Итераторы</a>
+      <a href="#generators">Генераторы</a>
+      <a href="#decorators">Декораторы</a>
+
+      <h3>ООП</h3>
+      <a href="#oop">ООП</a>
+      <a href="#dataclasses">Dataclasses</a>
+
+      <h3>Практика</h3>
+      <a href="#exceptions">Исключения</a>
+      <a href="#files">Файлы</a>
+      <a href="#pathlib">Pathlib</a>
+      <a href="#json">JSON</a>
+      <a href="#regex">Regex</a>
+
+      <h3>Модули Python</h3>
+      <a href="#modules">Модули и пакеты</a>
+      <a href="#import-system">Импорт</a>
+      <a href="#pip-venv">pip и venv</a>
+      <a href="#stdlib">Стандартная библиотека</a>
+      <a href="#math-module">math</a>
+      <a href="#random-module">random</a>
+      <a href="#datetime-module">datetime</a>
+      <a href="#os-module">os</a>
+      <a href="#sys-module">sys</a>
+      <a href="#collections-module">collections</a>
+      <a href="#itertools-module">itertools</a>
+      <a href="#functools-module">functools</a>
+      <a href="#sqlite3-module">sqlite3</a>
+      <a href="#tkinter-module">tkinter</a>
+      <a href="#asyncio-module">asyncio</a>
+
+      <h3>Внешние библиотеки</h3>
+      <a href="#requests-module">requests</a>
+      <a href="#numpy-module">numpy</a>
+      <a href="#pandas-module">pandas</a>
+
+      <h3>Практика и стиль</h3>
+      <a href="#testing">Тестирование</a>
+      <a href="#best-practices">Лучшие практики</a>
+      <a href="#mistakes">Частые ошибки</a>
+      <a href="#projects">Проекты</a>
+      <a href="#cheatsheet">Шпаргалка</a>
+    </nav>
+  </aside>
+
+  <main>
+    <div class="hero">
+      <h1>Подробная документация по Python</h1>
+      <p>
+        Это расширенная учебная версия документации по Python. Здесь каждый важный раздел
+        описан подробнее: не только “как написать”, но и “что это значит”, “когда использовать”
+        и “какие ошибки бывают”.
+      </p>
+      <div class="badges">
+        <div class="badge">Много пояснений</div>
+        <div class="badge">Много примеров</div>
+        <div class="badge">Подробные структуры данных</div>
+        <div class="badge">Практика и модули</div>
+      </div>
+    </div>
+
+    <section id="intro">
+      <h2>Что такое Python</h2>
+      <p>
+        Python — это высокоуровневый интерпретируемый язык программирования общего назначения.
+        Он известен своей простотой, читаемостью и очень богатой экосистемой библиотек.
+      </p>
+      <p>
+        Главная особенность Python — он позволяет быстро переходить от идеи к рабочему коду.
+        Поэтому его используют и для обучения, и для серьёзных промышленных проектов.
+      </p>
+
+      <h3>Что значит "высокоуровневый"</h3>
+      <p>
+        Это означает, что язык скрывает множество низкоуровневых деталей:
+        управление памятью, сложную работу с ресурсами, служебный синтаксис.
+      </p>
+
+      <h3>Что значит "интерпретируемый"</h3>
+      <p>
+        Код Python обычно запускается интерпретатором, а не компилируется напрямую в машинный код так,
+        как это происходит в некоторых других языках.
+      </p>
+
+      <h3>Почему Python любят</h3>
+      <ul>
+        <li>Его код легко читать.</li>
+        <li>На нём быстро писать полезные программы.</li>
+        <li>Подходит и для маленьких скриптов, и для больших приложений.</li>
+        <li>Есть библиотеки почти для любой задачи.</li>
+      </ul>
+
+      <h3>Основные области применения</h3>
+      <div class="grid-3">
+        <div class="card"><h4>Автоматизация</h4><p>Скрипты, парсеры, боты, работа с файлами и API.</p></div>
+        <div class="card"><h4>Веб-разработка</h4><p>Django, Flask, FastAPI для сайтов и серверов.</p></div>
+        <div class="card"><h4>Data Science</h4><p>NumPy, pandas, matplotlib и другие инструменты аналитики.</p></div>
+        <div class="card"><h4>ML / AI</h4><p>PyTorch, TensorFlow, scikit-learn.</p></div>
+        <div class="card"><h4>Тестирование</h4><p>Автотесты, тестовые фреймворки, утилиты.</p></div>
+        <div class="card"><h4>GUI / Desktop</h4><p>Небольшие графические приложения.</p></div>
+      </div>
+    </section>
+
+    <section id="install">
+      <h2>Установка Python</h2>
+
+      <h3>Windows</h3>
+      <ol>
+        <li>Скачай установщик с <span class="inline-code">python.org</span>.</li>
+        <li>При установке поставь галочку <span class="inline-code">Add Python to PATH</span>.</li>
+        <li>Заверши установку.</li>
+      </ol>
+
+      <h3>Linux</h3>
+      <pre><code>python3 --version</code></pre>
+      <pre><code>sudo apt update
+sudo apt install python3</code></pre>
+
+      <h3>macOS</h3>
+      <pre><code>brew install python</code></pre>
+
+      <h3>Проверка</h3>
+      <pre><code>python --version
+# или
+python3 --version</code></pre>
+
+      <div class="tip">
+        Для работы с Python удобно установить VS Code, PyCharm или хотя бы хороший редактор кода.
+      </div>
+    </section>
+
+    <section id="run">
+      <h2>Запуск программ</h2>
+
+      <h3>Интерактивная консоль</h3>
+      <pre><code>python</code></pre>
+      <p>
+        Полезна для быстрых экспериментов: проверить выражение, протестировать маленький кусок кода,
+        посмотреть тип данных.
+      </p>
+
+      <h3>Запуск файла</h3>
+      <pre><code>python main.py</code></pre>
+
+      <h3>Где обычно пишут код</h3>
+      <ul>
+        <li>VS Code — лёгкий и популярный вариант.</li>
+        <li>PyCharm — более тяжёлая, но мощная IDE.</li>
+        <li>Jupyter Notebook — особенно удобно для обучения и анализа данных.</li>
+      </ul>
+    </section>
+
+    <section id="first-program">
+      <h2>Первая программа</h2>
+      <pre><code>print("Привет, мир!")</code></pre>
+
+      <p>
+        <span class="inline-code">print()</span> — встроенная функция для вывода информации.
+      </p>
+
+      <pre><code>print("Текст")
+print(123)
+print(3.14)
+print(True)</code></pre>
+
+      <h3>Несколько значений сразу</h3>
+      <pre><code>name = "Анна"
+age = 20
+print("Имя:", name, "Возраст:", age)</code></pre>
+
+      <h3>Почему это важно</h3>
+      <p>
+        На старте обучения почти весь результат программы видно через <span class="inline-code">print()</span>.
+        Это твой основной инструмент проверки.
+      </p>
+    </section>
+
+    <section id="syntax">
+      <h2>Синтаксис и стиль</h2>
+
+      <h3>Отступы</h3>
+      <p>
+        В Python блоки кода задаются отступами, а не фигурными скобками.
+      </p>
+      <pre><code>if True:
+    print("Внутри блока")
+    print("Тоже внутри блока")</code></pre>
+
+      <h3>Комментарии</h3>
+      <pre><code># Это комментарий
+print("Код")  # комментарий после строки</code></pre>
+
+      <h3>Docstring</h3>
+      <pre><code>def hello():
+    """Функция выводит приветствие."""
+    print("Привет")</code></pre>
+
+      <h3>PEP 8</h3>
+      <ul>
+        <li>Имена переменных и функций — <span class="inline-code">snake_case</span>.</li>
+        <li>Классы — <span class="inline-code">CamelCase</span>.</li>
+        <li>4 пробела на уровень отступа.</li>
+        <li>Лаконичный и читаемый код важнее “умного” кода.</li>
+      </ul>
+
+      <div class="warn">
+        Не смешивай табы и пробелы — это частый источник ошибок.
+      </div>
+    </section>
+
+    <section id="variables">
+      <h2>Переменные и типы данных</h2>
+
+      <p>
+        Переменная — это имя, которое указывает на значение.
+        Python сам определяет тип на основе присваиваемого объекта.
+      </p>
+
+      <pre><code>name = "Иван"
+age = 25
+price = 99.9
+is_active = True
+nothing = None</code></pre>
+
+      <h3>Основные типы</h3>
+      <table>
+        <tr><th>Тип</th><th>Пример</th><th>Что означает</th></tr>
+        <tr><td>int</td><td>10</td><td>Целое число</td></tr>
+        <tr><td>float</td><td>3.14</td><td>Дробное число</td></tr>
+        <tr><td>str</td><td>"hello"</td><td>Строка</td></tr>
+        <tr><td>bool</td><td>True/False</td><td>Логическое значение</td></tr>
+        <tr><td>NoneType</td><td>None</td><td>Отсутствие значения</td></tr>
+        <tr><td>list</td><td>[1,2]</td><td>Изменяемая последовательность</td></tr>
+        <tr><td>tuple</td><td>(1,2)</td><td>Неизменяемая последовательность</td></tr>
+        <tr><td>set</td><td>{1,2}</td><td>Уникальные элементы</td></tr>
+        <tr><td>dict</td><td>{"a":1}</td><td>Пары ключ-значение</td></tr>
+      </table>
+
+      <h3>Проверка типа</h3>
+      <pre><code>x = 10
+print(type(x))</code></pre>
+
+      <h3>Преобразование типов</h3>
+      <pre><code>age = "20"
+age_number = int(age)
+
+price = "19.5"
+price_number = float(price)
+
+num = 123
+text = str(num)</code></pre>
+
+      <h3>Что важно помнить</h3>
+      <ul>
+        <li>Переменная в Python — это ссылка на объект.</li>
+        <li>Один и тот же объект может иметь несколько ссылок.</li>
+        <li>Изменяемые и неизменяемые типы ведут себя по-разному.</li>
+      </ul>
+
+      <h3>Именование</h3>
+      <pre><code>user_name = "alex"
+total_price = 2500
+is_premium_user = False</code></pre>
+    </section>
+
+    <section id="numbers">
+      <h2>Числа</h2>
+
+      <p>
+        В Python основная работа идёт с <span class="inline-code">int</span> и <span class="inline-code">float</span>.
+      </p>
+
+      <pre><code>a = 10
+b = 3
+
+print(a + b)
+print(a - b)
+print(a * b)
+print(a / b)
+print(a // b)
+print(a % b)
+print(a ** b)</code></pre>
+
+      <h3>Что означает каждый оператор</h3>
+      <table>
+        <tr><th>Оператор</th><th>Смысл</th><th>Пример</th></tr>
+        <tr><td>+</td><td>Сложение</td><td>2 + 3</td></tr>
+        <tr><td>-</td><td>Вычитание</td><td>5 - 2</td></tr>
+        <tr><td>*</td><td>Умножение</td><td>4 * 3</td></tr>
+        <tr><td>/</td><td>Обычное деление</td><td>10 / 2</td></tr>
+        <tr><td>//</td><td>Целочисленное деление</td><td>10 // 3</td></tr>
+        <tr><td>%</td><td>Остаток от деления</td><td>10 % 3</td></tr>
+        <tr><td>**</td><td>Возведение в степень</td><td>2 ** 5</td></tr>
+      </table>
+
+      <h3>Полезные встроенные функции</h3>
+      <pre><code>print(abs(-10))
+print(round(3.14159, 2))
+print(min(5, 2, 9))
+print(max(5, 2, 9))</code></pre>
+
+      <h3>Частые задачи</h3>
+      <pre><code>number = 8
+print(number % 2 == 0)  # чётность</code></pre>
+    </section>
+
+    <section id="bools">
+      <h2>Булева логика</h2>
+
+      <p>
+        Булев тип <span class="inline-code">bool</span> имеет два значения:
+        <span class="inline-code">True</span> и <span class="inline-code">False</span>.
+      </p>
+
+      <pre><code>is_active = True
+is_admin = False</code></pre>
+
+      <h3>Что считается False в Python</h3>
+      <ul>
+        <li><span class="inline-code">False</span></li>
+        <li><span class="inline-code">None</span></li>
+        <li><span class="inline-code">0</span>, <span class="inline-code">0.0</span></li>
+        <li>Пустая строка <span class="inline-code">""</span></li>
+        <li>Пустой список <span class="inline-code">[]</span></li>
+        <li>Пустой словарь <span class="inline-code">{}</span></li>
+      </ul>
+
+      <pre><code>print(bool(0))
+print(bool(""))
+print(bool("abc"))</code></pre>
+
+      <h3>Логические операторы</h3>
+      <pre><code>print(True and False)
+print(True or False)
+print(not True)</code></pre>
+
+      <h3>Когда это используется</h3>
+      <ul>
+        <li>В условиях.</li>
+        <li>В проверках доступа.</li>
+        <li>В фильтрации данных.</li>
+      </ul>
+    </section>
+
+    <section id="io">
+      <h2>Ввод и вывод</h2>
+
+      <h3>Вывод: print()</h3>
+      <pre><code>print("Привет")
+print("Сумма:", 2 + 2)</code></pre>
+
+      <h3>Полезные параметры print()</h3>
+      <pre><code>print("A", "B", "C", sep="-")
+print("Привет", end=" ")
+print("мир")</code></pre>
+
+      <h3>Ввод: input()</h3>
+      <pre><code>name = input("Введите имя: ")
+print("Привет,", name)</code></pre>
+
+      <p>
+        <span class="inline-code">input()</span> всегда возвращает строку.
+      </p>
+
+      <pre><code>age = int(input("Введите возраст: "))
+print(age + 1)</code></pre>
+
+      <div class="warn">
+        Одна из самых частых ошибок — забыть преобразовать введённую строку в число.
+      </div>
+    </section>
+
+    <section id="operators">
+      <h2>Операторы</h2>
+
+      <h3>Арифметические</h3>
+      <pre><code>print(2 + 3)
+print(5 - 1)
+print(4 * 2)
+print(8 / 2)</code></pre>
+
+      <h3>Сравнения</h3>
+      <pre><code>print(5 == 5)
+print(5 != 3)
+print(5 > 3)
+print(5 < 3)
+print(5 >= 5)
+print(5 <= 7)</code></pre>
+
+      <h3>Логические</h3>
+      <pre><code>print(True and False)
+print(True or False)
+print(not True)</code></pre>
+
+      <h3>Проверка принадлежности</h3>
+      <pre><code>fruits = ["яблоко", "банан"]
+print("яблоко" in fruits)
+print("груша" not in fruits)</code></pre>
+
+      <h3>Сокращённое присваивание</h3>
+      <pre><code>x = 10
+x += 5
+x *= 2
+print(x)</code></pre>
+    </section>
+
+    <section id="conditions">
+      <h2>Условия</h2>
+
+      <p>
+        Условные конструкции позволяют выполнять разный код в зависимости от состояния программы.
+      </p>
+
+      <pre><code>age = 18
+
+if age >= 18:
+    print("Совершеннолетний")</code></pre>
+
+      <pre><code>age = 15
+
+if age >= 18:
+    print("Можно")
+else:
+    print("Нельзя")</code></pre>
+
+      <pre><code>score = 82
+
+if score >= 90:
+    print("Отлично")
+elif score >= 75:
+    print("Хорошо")
+elif score >= 60:
+    print("Нормально")
+else:
+    print("Плохо")</code></pre>
+
+      <h3>Тернарное выражение</h3>
+      <pre><code>age = 20
+status = "взрослый" if age >= 18 else "ребёнок"</code></pre>
+
+      <h3>Полезные советы</h3>
+      <ul>
+        <li>Если вариантов несколько — используй <span class="inline-code">elif</span>.</li>
+        <li>Если условие слишком длинное — разбей его на части.</li>
+        <li>Старайся избегать глубокой вложенности.</li>
+      </ul>
+    </section>
+
+    <section id="loops">
+      <h2>Циклы</h2>
+
+      <h3>while</h3>
+      <pre><code>count = 1
+while count <= 5:
+    print(count)
+    count += 1</code></pre>
+
+      <p>
+        Используется, когда количество повторений заранее неизвестно.
+      </p>
+
+      <h3>for</h3>
+      <pre><code>for i in range(5):
+    print(i)</code></pre>
+
+      <p>
+        Используется для перебора элементов и последовательностей.
+      </p>
+
+      <h3>range()</h3>
+      <pre><code>print(list(range(5)))
+print(list(range(2, 8)))
+print(list(range(1, 10, 2)))</code></pre>
+
+      <h3>break</h3>
+      <pre><code>for i in range(10):
+    if i == 4:
+        break
+    print(i)</code></pre>
+
+      <h3>continue</h3>
+      <pre><code>for i in range(5):
+    if i == 2:
+        continue
+    print(i)</code></pre>
+
+      <h3>else у циклов</h3>
+      <pre><code>for i in range(3):
+    print(i)
+else:
+    print("Цикл завершён без break")</code></pre>
+
+      <h3>Частые ошибки</h3>
+      <ul>
+        <li>Бесконечный цикл в <span class="inline-code">while</span>.</li>
+        <li>Изменение коллекции во время перебора без понимания последствий.</li>
+        <li>Неправильные границы в <span class="inline-code">range()</span>.</li>
+      </ul>
+    </section>
+
+    <section id="strings">
+      <h2>Строки</h2>
+
+      <p>
+        Строка — последовательность символов. Строки в Python неизменяемы.
+      </p>
+
+      <pre><code>text = "Python"</code></pre>
+
+      <h3>Индексы</h3>
+      <pre><code>print(text[0])
+print(text[-1])</code></pre>
+
+      <h3>Срезы</h3>
+      <pre><code>print(text[0:2])
+print(text[2:])
+print(text[::-1])</code></pre>
+
+      <h3>Полезные методы</h3>
+      <table>
+        <tr><th>Метод</th><th>Что делает</th></tr>
+        <tr><td>strip()</td><td>Убирает пробелы по краям</td></tr>
+        <tr><td>lower()</td><td>Нижний регистр</td></tr>
+        <tr><td>upper()</td><td>Верхний регистр</td></tr>
+        <tr><td>replace(a, b)</td><td>Замена подстроки</td></tr>
+        <tr><td>split()</td><td>Разбивает строку на список</td></tr>
+        <tr><td>join()</td><td>Склеивает список строк</td></tr>
+        <tr><td>startswith()</td><td>Проверка начала строки</td></tr>
+        <tr><td>endswith()</td><td>Проверка конца строки</td></tr>
+      </table>
+
+      <pre><code>text = "  hello world  "
+print(text.strip())
+print(text.lower())
+print(text.upper())
+print(text.replace("world", "python"))
+print(text.split())</code></pre>
+
+      <h3>Проверяющие методы</h3>
+      <pre><code>print("123".isdigit())
+print("abc".isalpha())
+print("abc123".isalnum())</code></pre>
+
+      <h3>Форматирование</h3>
+      <pre><code>name = "Олег"
+age = 30
+print(f"Имя: {name}, возраст: {age}")</code></pre>
+
+      <h3>join()</h3>
+      <pre><code>words = ["Я", "люблю", "Python"]
+result = " ".join(words)
+print(result)</code></pre>
+
+      <div class="tip">
+        В современном Python для вставки переменных в строку чаще всего используют f-строки.
+      </div>
+    </section>
+
+    <section id="lists">
+      <h2>Списки</h2>
+
+      <p>
+        Список — изменяемая последовательность элементов.
+        Один из самых часто используемых типов в Python.
+      </p>
+
+      <pre><code>numbers = [1, 2, 3]
+mixed = [1, "текст", True, 3.14]</code></pre>
+
+      <h3>Что важно знать</h3>
+      <ul>
+        <li>Список хранит элементы по порядку.</li>
+        <li>Элементы можно изменять, добавлять и удалять.</li>
+        <li>Элементы могут быть разных типов.</li>
+      </ul>
+
+      <h3>Доступ и изменение</h3>
+      <pre><code>fruits = ["яблоко", "банан", "апельсин"]
+print(fruits[0])
+fruits[1] = "груша"
+print(fruits)</code></pre>
+
+      <h3>Основные методы</h3>
+      <table>
+        <tr><th>Метод</th><th>Что делает</th></tr>
+        <tr><td>append(x)</td><td>Добавляет в конец</td></tr>
+        <tr><td>insert(i, x)</td><td>Вставляет по индексу</td></tr>
+        <tr><td>remove(x)</td><td>Удаляет первое совпадение</td></tr>
+        <tr><td>pop()</td><td>Удаляет и возвращает элемент</td></tr>
+        <tr><td>sort()</td><td>Сортирует список</td></tr>
+        <tr><td>reverse()</td><td>Разворачивает список</td></tr>
+        <tr><td>count(x)</td><td>Считает количество</td></tr>
+        <tr><td>index(x)</td><td>Находит индекс</td></tr>
+        <tr><td>copy()</td><td>Делает копию</td></tr>
+      </table>
+
+      <pre><code>items = [3, 1, 4]
+items.append(10)
+items.insert(1, 99)
+items.remove(4)
+items.sort()
+print(items)</code></pre>
+
+      <h3>Перебор</h3>
+      <pre><code>for item in fruits:
+    print(item)</code></pre>
+
+      <h3>enumerate()</h3>
+      <pre><code>for index, value in enumerate(fruits, start=1):
+    print(index, value)</code></pre>
+
+      <h3>Срезы</h3>
+      <pre><code>nums = [0, 1, 2, 3, 4, 5]
+print(nums[1:4])
+print(nums[::-1])</code></pre>
+
+      <h3>Копирование</h3>
+      <pre><code>a = [1, 2, 3]
+b = a.copy()
+b.append(4)</code></pre>
+
+      <div class="warn">
+        <span class="inline-code">b = a</span> — это не копия, а вторая ссылка на тот же список.
+      </div>
+    </section>
+
+    <section id="tuples">
+      <h2>Кортежи</h2>
+
+      <p>
+        Кортеж — это неизменяемая последовательность.
+      </p>
+
+      <pre><code>point = (10, 20)
+print(point[0])</code></pre>
+
+      <h3>Когда использовать</h3>
+      <ul>
+        <li>Когда данные не должны меняться.</li>
+        <li>Когда нужно вернуть несколько значений из функции.</li>
+        <li>Когда набор данных фиксирован логически.</li>
+      </ul>
+
+      <h3>Распаковка</h3>
+      <pre><code>x, y = point
+print(x, y)</code></pre>
+
+      <h3>Возврат нескольких значений</h3>
+      <pre><code>def get_user():
+    return ("Анна", 22)
+
+name, age = get_user()</code></pre>
+    </section>
+
+    <section id="sets">
+      <h2>Множества</h2>
+
+      <p>
+        Множество — коллекция уникальных элементов.
+      </p>
+
+      <pre><code>numbers = {1, 2, 3, 3, 4}
+print(numbers)</code></pre>
+
+      <h3>Особенности множества</h3>
+      <ul>
+        <li>Дубликаты автоматически убираются.</li>
+        <li>Порядок не гарантируется.</li>
+        <li>Очень удобно для операций над уникальными данными.</li>
+      </ul>
+
+      <h3>Методы</h3>
+      <pre><code>s = {1, 2, 3}
+s.add(4)
+s.remove(2)
+print(s)</code></pre>
+
+      <h3>Операции над множествами</h3>
+      <pre><code>a = {1, 2, 3}
+b = {3, 4, 5}
+
+print(a | b)  # объединение
+print(a & b)  # пересечение
+print(a - b)  # разность
+print(a ^ b)  # симметрическая разность</code></pre>
+
+      <h3>Удаление дублей</h3>
+      <pre><code>items = [1, 2, 2, 3, 3, 4]
+unique_items = list(set(items))
+print(unique_items)</code></pre>
+    </section>
+
+    <section id="dicts">
+      <h2>Словари</h2>
+
+      <p>
+        Словарь хранит данные в формате <strong>ключ: значение</strong>.
+        Это одна из главных структур в Python.
+      </p>
+
+      <pre><code>user = {
+    "name": "Иван",
+    "age": 25,
+    "city": "Москва"
+}</code></pre>
+
+      <h3>Когда словарь особенно полезен</h3>
+      <ul>
+        <li>Когда объект имеет поля: имя, возраст, email.</li>
+        <li>Когда нужен быстрый доступ по названию ключа.</li>
+        <li>Когда работаешь с JSON и API.</li>
+      </ul>
+
+      <h3>Создание словаря</h3>
+      <pre><code>user = {"name": "Иван", "age": 25}
+empty = {}
+data = dict(name="Анна", age=20)</code></pre>
+
+      <h3>Доступ к данным</h3>
+      <pre><code>print(user["name"])
+print(user.get("age"))</code></pre>
+
+      <p>
+        Разница:
+      </p>
+      <ul>
+        <li><span class="inline-code">user["key"]</span> — вызовет ошибку, если ключа нет.</li>
+        <li><span class="inline-code">user.get("key")</span> — безопасно вернёт <span class="inline-code">None</span> или значение по умолчанию.</li>
+      </ul>
+
+      <pre><code>print(user.get("email", "не указан"))</code></pre>
+
+      <h3>Добавление и изменение</h3>
+      <pre><code>user["age"] = 26
+user["email"] = "ivan@example.com"</code></pre>
+
+      <h3>Удаление</h3>
+      <pre><code>del user["city"]
+age = user.pop("age")</code></pre>
+
+      <h3>Перебор</h3>
+      <pre><code>for key in user:
+    print(key)
+
+for value in user.values():
+    print(value)
+
+for key, value in user.items():
+    print(key, value)</code></pre>
+
+      <h3>Основные методы</h3>
+      <table>
+        <tr><th>Метод</th><th>Что делает</th></tr>
+        <tr><td>get()</td><td>Безопасно получает значение</td></tr>
+        <tr><td>keys()</td><td>Ключи</td></tr>
+        <tr><td>values()</td><td>Значения</td></tr>
+        <tr><td>items()</td><td>Пары ключ-значение</td></tr>
+        <tr><td>update()</td><td>Обновляет словарь</td></tr>
+        <tr><td>setdefault()</td><td>Возвращает значение или создаёт ключ</td></tr>
+        <tr><td>copy()</td><td>Копия словаря</td></tr>
+        <tr><td>clear()</td><td>Очищает словарь</td></tr>
+      </table>
+
+      <h3>update()</h3>
+      <pre><code>user.update({"city": "Москва", "email": "x@y.com"})</code></pre>
+
+      <h3>setdefault()</h3>
+      <pre><code>user.setdefault("age", 18)</code></pre>
+
+      <h3>Вложенные словари</h3>
+      <pre><code>user = {
+    "name": "Иван",
+    "address": {
+        "city": "Москва",
+        "street": "Ленина"
+    }
+}
+
+print(user["address"]["city"])</code></pre>
+
+      <h3>Список словарей</h3>
+      <pre><code>users = [
+    {"name": "Иван", "age": 25},
+    {"name": "Анна", "age": 20}
+]
+
+for user in users:
+    print(user["name"])</code></pre>
+
+      <h3>Dict comprehension</h3>
+      <pre><code>squares = {x: x ** 2 for x in range(5)}
+print(squares)</code></pre>
+
+      <h3>Частые ошибки</h3>
+      <ul>
+        <li>Обращение к несуществующему ключу через квадратные скобки.</li>
+        <li>Путаница между <span class="inline-code">keys()</span>, <span class="inline-code">values()</span> и <span class="inline-code">items()</span>.</li>
+        <li>Использование изменяемого объекта как ключа.</li>
+      </ul>
+    </section>
+
+    <section id="comprehensions">
+      <h2>Comprehensions</h2>
+
+      <p>
+        Comprehension — короткий способ создавать коллекции.
+      </p>
+
+      <h3>Список</h3>
+      <pre><code>squares = [x ** 2 for x in range(10)]</code></pre>
+
+      <h3>С условием</h3>
+      <pre><code>evens = [x for x in range(20) if x % 2 == 0]</code></pre>
+
+      <h3>Словарь</h3>
+      <pre><code>mapping = {x: x ** 2 for x in range(5)}</code></pre>
+
+      <h3>Множество</h3>
+      <pre><code>lengths = {len(word) for word in ["кот", "собака", "лиса"]}</code></pre>
+
+      <h3>Когда использовать</h3>
+      <ul>
+        <li>Когда выражение короткое и читаемое.</li>
+        <li>Когда строишь новую коллекцию на основе другой.</li>
+      </ul>
+    </section>
+
+    <section id="functions">
+      <h2>Функции</h2>
+
+      <p>
+        Функции позволяют группировать код, избегать повторения и делать программу понятнее.
+      </p>
+
+      <h3>Объявление</h3>
+      <pre><code>def greet():
+    print("Привет!")</code></pre>
+
+      <h3>Аргументы</h3>
+      <pre><code>def greet(name):
+    print(f"Привет, {name}!")</code></pre>
+
+      <h3>return</h3>
+      <pre><code>def add(a, b):
+    return a + b</code></pre>
+
+      <h3>Аргументы по умолчанию</h3>
+      <pre><code>def greet(name="гость"):
+    print(f"Привет, {name}!")</code></pre>
+
+      <h3>*args и **kwargs</h3>
+      <pre><code>def sum_all(*args):
+    return sum(args)
+
+def print_data(**kwargs):
+    for key, value in kwargs.items():
+        print(key, value)</code></pre>
+
+      <h3>Важные моменты</h3>
+      <ul>
+        <li>Если в функции нет <span class="inline-code">return</span>, она возвращает <span class="inline-code">None</span>.</li>
+        <li><span class="inline-code">return</span> завершает выполнение функции.</li>
+        <li>Хорошая функция обычно делает одну понятную задачу.</li>
+      </ul>
+
+      <h3>Docstring</h3>
+      <pre><code>def multiply(a, b):
+    """Возвращает произведение двух чисел."""
+    return a * b</code></pre>
+    </section>
+
+    <section id="scope">
+      <h2>Область видимости</h2>
+
+      <pre><code>x = 100
+
+def show():
+    y = 50
+    print(x)
+    print(y)</code></pre>
+
+      <h3>Локальные и глобальные переменные</h3>
+      <ul>
+        <li>Локальная переменная существует внутри функции.</li>
+        <li>Глобальная — вне функции.</li>
+      </ul>
+
+      <h3>global</h3>
+      <pre><code>counter = 0
+
+def increment():
+    global counter
+    counter += 1</code></pre>
+
+      <h3>nonlocal</h3>
+      <pre><code>def outer():
+    x = 10
+    def inner():
+        nonlocal x
+        x += 1</code></pre>
+
+      <div class="warn">
+        Глобальные переменные лучше использовать как можно меньше.
+      </div>
+    </section>
+
+    <section id="recursion">
+      <h2>Рекурсия</h2>
+
+      <p>
+        Рекурсия — это вызов функцией самой себя.
+      </p>
+
+      <pre><code>def factorial(n):
+    if n == 1:
+        return 1
+    return n * factorial(n - 1)</code></pre>
+
+      <h3>Что обязательно должно быть</h3>
+      <ul>
+        <li>Базовый случай — когда рекурсия заканчивается.</li>
+        <li>Рекурсивный шаг — приближение к базовому случаю.</li>
+      </ul>
+    </section>
+
+    <section id="lambda">
+      <h2>Lambda, map, filter</h2>
+
+      <h3>lambda</h3>
+      <pre><code>square = lambda x: x ** 2
+print(square(5))</code></pre>
+
+      <h3>map()</h3>
+      <pre><code>numbers = [1, 2, 3]
+result = list(map(lambda x: x * 2, numbers))</code></pre>
+
+      <h3>filter()</h3>
+      <pre><code>numbers = [1, 2, 3, 4, 5, 6]
+evens = list(filter(lambda x: x % 2 == 0, numbers))</code></pre>
+
+      <p>
+        В современном коде нередко проще использовать comprehensions.
+      </p>
+    </section>
+
+    <section id="iterators">
+      <h2>Итераторы</h2>
+
+      <p>
+        Итератор — объект, из которого можно получать элементы по одному.
+      </p>
+
+      <pre><code>numbers = [1, 2, 3]
+it = iter(numbers)
+
+print(next(it))
+print(next(it))
+print(next(it))</code></pre>
+
+      <p>
+        Итераторы лежат в основе цикла <span class="inline-code">for</span>.
+      </p>
+    </section>
+
+    <section id="generators">
+      <h2>Генераторы</h2>
+
+      <pre><code>def count_to(n):
+    i = 1
+    while i <= n:
+        yield i
+        i += 1</code></pre>
+
+      <h3>Что делает yield</h3>
+      <p>
+        Возвращает значение, но сохраняет состояние функции.
+      </p>
+
+      <h3>Генераторное выражение</h3>
+      <pre><code>squares = (x ** 2 for x in range(5))</code></pre>
+
+      <h3>Когда полезно</h3>
+      <ul>
+        <li>Для больших данных.</li>
+        <li>Для экономии памяти.</li>
+        <li>Для потоковой обработки.</li>
+      </ul>
+    </section>
+
+    <section id="decorators">
+      <h2>Декораторы</h2>
+
+      <pre><code>def decorator(func):
+    def wrapper():
+        print("До вызова")
+        func()
+        print("После вызова")
+    return wrapper</code></pre>
+
+      <pre><code>@decorator
+def hello():
+    print("Привет")
+
+hello()</code></pre>
+
+      <p>
+        Декораторы часто применяют для логирования, проверки доступа и кэширования.
+      </p>
+    </section>
+
+    <section id="oop">
+      <h2>ООП</h2>
+
+      <h3>Класс и объект</h3>
+      <pre><code>class Dog:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def bark(self):
+        print(f"{self.name} говорит: Гав!")</code></pre>
+
+      <h3>Наследование</h3>
+      <pre><code>class Animal:
+    def speak(self):
+        print("Звук")
+
+class Cat(Animal):
+    def speak(self):
+        print("Мяу")</code></pre>
+
+      <h3>Полиморфизм</h3>
+      <pre><code>def animal_sound(animal):
+    animal.speak()</code></pre>
+
+      <h3>Инкапсуляция</h3>
+      <p>
+        Обычно под этим понимают скрытие деталей реализации и работу через методы.
+      </p>
+
+      <h3>Магические методы</h3>
+      <pre><code>class User:
+    def __init__(self, name):
+        self.name = name
+
+    def __str__(self):
+        return f"Пользователь: {self.name}"</code></pre>
+    </section>
+
+    <section id="dataclasses">
+      <h2>Dataclasses</h2>
+      <pre><code>from dataclasses import dataclass
+
+@dataclass
+class User:
+    name: str
+    age: int</code></pre>
+
+      <p>
+        Удобно для классов, которые в основном просто хранят данные.
+      </p>
+    </section>
+
+    <section id="exceptions">
+      <h2>Исключения</h2>
+
+      <pre><code>try:
+    value = int(input("Введите число: "))
+except ValueError:
+    print("Нужно ввести число")</code></pre>
+
+      <h3>Несколько except</h3>
+      <pre><code>try:
+    a = int(input("a: "))
+    b = int(input("b: "))
+    print(a / b)
+except ValueError:
+    print("Неверный ввод")
+except ZeroDivisionError:
+    print("Деление на ноль")</code></pre>
+
+      <h3>else и finally</h3>
+      <pre><code>try:
+    x = int("10")
+except ValueError:
+    print("Ошибка")
+else:
+    print("Ошибки не было")
+finally:
+    print("Этот блок выполнится всегда")</code></pre>
+
+      <h3>raise</h3>
+      <pre><code>if age < 0:
+    raise ValueError("Возраст не может быть отрицательным")</code></pre>
+    </section>
+
+    <section id="files">
+      <h2>Файлы</h2>
+
+      <p>
+        Работа с файлами — одна из самых важных практических тем.
+      </p>
+
+      <h3>Открытие файла</h3>
+      <pre><code>with open("example.txt", "r", encoding="utf-8") as file:
+    content = file.read()</code></pre>
+
+      <h3>Режимы открытия</h3>
+      <table>
+        <tr><th>Режим</th><th>Что делает</th></tr>
+        <tr><td>r</td><td>Чтение, файл должен существовать</td></tr>
+        <tr><td>w</td><td>Запись, файл создаётся или очищается</td></tr>
+        <tr><td>a</td><td>Добавление в конец, файл создаётся если его нет</td></tr>
+        <tr><td>x</td><td>Создать новый файл, ошибка если уже есть</td></tr>
+        <tr><td>t</td><td>Текстовый режим</td></tr>
+        <tr><td>b</td><td>Бинарный режим</td></tr>
+        <tr><td>+</td><td>Чтение и запись одновременно</td></tr>
+      </table>
+
+      <h3>Чтение</h3>
+      <pre><code>with open("example.txt", "r", encoding="utf-8") as file:
+    print(file.read())</code></pre>
+
+      <h3>Построчное чтение</h3>
+      <pre><code>with open("example.txt", "r", encoding="utf-8") as file:
+    for line in file:
+        print(line.strip())</code></pre>
+
+      <h3>Запись</h3>
+      <pre><code>with open("output.txt", "w", encoding="utf-8") as file:
+    file.write("Первая строка\n")</code></pre>
+
+      <h3>Добавление</h3>
+      <pre><code>with open("output.txt", "a", encoding="utf-8") as file:
+    file.write("Новая строка\n")</code></pre>
+
+      <h3>Бинарный режим</h3>
+      <pre><code>with open("image.png", "rb") as file:
+    data = file.read()</code></pre>
+
+      <h3>Полезные методы</h3>
+      <ul>
+        <li><span class="inline-code">read()</span> — прочитать всё</li>
+        <li><span class="inline-code">readline()</span> — одна строка</li>
+        <li><span class="inline-code">readlines()</span> — все строки в список</li>
+        <li><span class="inline-code">write()</span> — записать строку</li>
+        <li><span class="inline-code">writelines()</span> — записать список строк</li>
+        <li><span class="inline-code">seek()</span> — изменить позицию</li>
+        <li><span class="inline-code">tell()</span> — узнать позицию</li>
+      </ul>
+    </section>
+
+    <section id="pathlib">
+      <h2>Pathlib</h2>
+      <pre><code>from pathlib import Path
+
+path = Path("example.txt")
+print(path.exists())
+print(path.name)
+print(path.suffix)</code></pre>
+
+      <p>
+        <span class="inline-code">pathlib</span> делает работу с путями более удобной и современной.
+      </p>
+    </section>
+
+    <section id="json">
+      <h2>JSON</h2>
+      <pre><code>import json
+
+data = {"name": "Иван", "age": 25}
+text = json.dumps(data, ensure_ascii=False)
+print(text)</code></pre>
+
+      <pre><code>json_text = '{"name": "Анна", "age": 20}'
+data = json.loads(json_text)</code></pre>
+
+      <pre><code>with open("data.json", "w", encoding="utf-8") as file:
+    json.dump(data, file, ensure_ascii=False, indent=2)</code></pre>
+
+      <p>
+        JSON очень часто используется для обмена данными между приложениями.
+      </p>
+    </section>
+
+    <section id="regex">
+      <h2>Регулярные выражения</h2>
+      <pre><code>import re
+
+text = "Мой номер: 12345"
+match = re.search(r"\d+", text)
+print(match.group())</code></pre>
+
+      <h3>Полезные функции</h3>
+      <ul>
+        <li><span class="inline-code">search()</span> — первое совпадение</li>
+        <li><span class="inline-code">findall()</span> — все совпадения</li>
+        <li><span class="inline-code">match()</span> — проверка с начала строки</li>
+        <li><span class="inline-code">sub()</span> — замена</li>
+      </ul>
+    </section>
+
+    <section id="modules">
+      <h2>Модули и пакеты</h2>
+
+      <p>
+        Модуль — это файл <span class="inline-code">.py</span>.
+        Пакет — папка с модулями.
+      </p>
+
+      <pre><code># my_math.py
+def add(a, b):
+    return a + b</code></pre>
+
+      <pre><code>import my_math
+print(my_math.add(2, 3))</code></pre>
+
+      <p>
+        Модули помогают разбивать код на части и переиспользовать его.
+      </p>
+    </section>
+
+    <section id="import-system">
+      <h2>Импорт</h2>
+      <pre><code>import math
+from math import sqrt
+import math as m</code></pre>
+
+      <ul>
+        <li><span class="inline-code">import module</span> — импорт всего модуля.</li>
+        <li><span class="inline-code">from module import name</span> — импорт конкретного объекта.</li>
+        <li><span class="inline-code">as</span> — псевдоним.</li>
+      </ul>
+
+      <pre><code>if __name__ == "__main__":
+    print("Файл запущен напрямую")</code></pre>
+    </section>
+
+    <section id="pip-venv">
+      <h2>pip и venv</h2>
+
+      <h3>pip</h3>
+      <pre><code>pip install requests
+pip uninstall requests
+pip freeze > requirements.txt</code></pre>
+
+      <h3>venv</h3>
+      <pre><code>python -m venv venv</code></pre>
+
+      <pre><code># Windows
+venv\Scripts\activate
+
+# Linux/macOS
+source venv/bin/activate</code></pre>
+    </section>
+
+    <section id="stdlib">
+      <h2>Стандартная библиотека</h2>
+      <table>
+        <tr><th>Модуль</th><th>Назначение</th></tr>
+        <tr><td>math</td><td>Математика</td></tr>
+        <tr><td>random</td><td>Случайные значения</td></tr>
+        <tr><td>datetime</td><td>Дата и время</td></tr>
+        <tr><td>os</td><td>ОС и файловая система</td></tr>
+        <tr><td>sys</td><td>Параметры интерпретатора</td></tr>
+        <tr><td>json</td><td>JSON</td></tr>
+        <tr><td>pathlib</td><td>Пути</td></tr>
+        <tr><td>re</td><td>Regex</td></tr>
+        <tr><td>collections</td><td>Спецконтейнеры</td></tr>
+        <tr><td>itertools</td><td>Инструменты итерации</td></tr>
+        <tr><td>functools</td><td>Функциональные утилиты</td></tr>
+      </table>
+    </section>
+
+    <section id="math-module">
+      <h2>Модуль math</h2>
+      <pre><code>import math
+
+print(math.sqrt(16))
+print(math.pi)
+print(math.floor(3.9))
+print(math.ceil(3.1))</code></pre>
+    </section>
+
+    <section id="random-module">
+      <h2>Модуль random</h2>
+      <pre><code>import random
+
+print(random.randint(1, 10))
+print(random.choice(["яблоко", "банан"]))</code></pre>
+    </section>
+
+    <section id="datetime-module">
+      <h2>Модуль datetime</h2>
+      <pre><code>import datetime
+
+now = datetime.datetime.now()
+print(now)</code></pre>
+    </section>
+
+    <section id="os-module">
+      <h2>Модуль os</h2>
+      <pre><code>import os
+
+print(os.getcwd())
+print(os.listdir())</code></pre>
+    </section>
+
+    <section id="sys-module">
+      <h2>Модуль sys</h2>
+      <pre><code>import sys
+
+print(sys.version)
+print(sys.argv)</code></pre>
+    </section>
+
+    <section id="collections-module">
+      <h2>Модуль collections</h2>
+      <pre><code>from collections import Counter
+
+text = "banana"
+print(Counter(text))</code></pre>
+    </section>
+
+    <section id="itertools-module">
+      <h2>Модуль itertools</h2>
+      <pre><code>from itertools import chain
+
+for x in chain([1, 2], [3, 4]):
+    print(x)</code></pre>
+    </section>
+
+    <section id="functools-module">
+      <h2>Модуль functools</h2>
+      <pre><code>from functools import reduce
+
+numbers = [1, 2, 3, 4]
+print(reduce(lambda a, b: a + b, numbers))</code></pre>
+    </section>
+
+    <section id="sqlite3-module">
+      <h2>Модуль sqlite3</h2>
+      <pre><code>import sqlite3
+
+conn = sqlite3.connect("example.db")
+cursor = conn.cursor()
+cursor.execute("CREATE TABLE IF NOT EXISTS users (name TEXT)")
+conn.commit()
+conn.close()</code></pre>
+    </section>
+
+    <section id="tkinter-module">
+      <h2>Модуль tkinter</h2>
+      <pre><code>import tkinter as tk
+
+root = tk.Tk()
+root.title("Пример")
+root.mainloop()</code></pre>
+    </section>
+
+    <section id="asyncio-module">
+      <h2>Модуль asyncio</h2>
+      <pre><code>import asyncio
+
+async def hello():
+    await asyncio.sleep(1)
+    print("Готово")
+
+asyncio.run(hello())</code></pre>
+    </section>
+
+    <section id="requests-module">
+      <h2>Модуль requests</h2>
+      <pre><code>import requests
+
+response = requests.get("https://jsonplaceholder.typicode.com/posts/1")
+print(response.status_code)
+print(response.json())</code></pre>
+    </section>
+
+    <section id="numpy-module">
+      <h2>Модуль numpy</h2>
+      <pre><code>import numpy as np
+
+arr = np.array([1, 2, 3, 4])
+print(arr * 2)</code></pre>
+    </section>
+
+    <section id="pandas-module">
+      <h2>Модуль pandas</h2>
+      <pre><code>import pandas as pd
+
+df = pd.DataFrame({
+    "name": ["Анна", "Иван"],
+    "age": [20, 25]
+})
+print(df)</code></pre>
+    </section>
+
+    <section id="testing">
+      <h2>Тестирование</h2>
+      <pre><code>def add(a, b):
+    return a + b
+
+assert add(2, 3) == 5</code></pre>
+
+      <pre><code>import unittest
+
+class TestMath(unittest.TestCase):
+    def test_add(self):
+        self.assertEqual(add(2, 3), 5)</code></pre>
+    </section>
+
+    <section id="best-practices">
+      <h2>Лучшие практики</h2>
+      <ul>
+        <li>Пиши понятные имена.</li>
+        <li>Разбивай код на небольшие функции.</li>
+        <li>Не повторяй код.</li>
+        <li>Следуй PEP 8.</li>
+        <li>Используй виртуальные окружения.</li>
+        <li>Пиши тесты для ключевой логики.</li>
+      </ul>
+    </section>
+
+    <section id="mistakes">
+      <h2>Частые ошибки</h2>
+
+      <h3>input() возвращает строку</h3>
+      <pre><code>a = input("Введите число: ")
+b = input("Введите число: ")
+print(a + b)</code></pre>
+
+      <h3>Путаница между = и ==</h3>
+      <pre><code>x = 10
+print(x == 10)</code></pre>
+
+      <h3>Изменяемые аргументы по умолчанию</h3>
+      <pre><code>def add_item(item, items=[]):
+    items.append(item)
+    return items</code></pre>
+
+      <p>Лучше:</p>
+      <pre><code>def add_item(item, items=None):
+    if items is None:
+        items = []
+    items.append(item)
+    return items</code></pre>
+    </section>
+
+    <section id="projects">
+      <h2>Проекты</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h4>Новичок</h4>
+          <ul>
+            <li>Калькулятор</li>
+            <li>Угадай число</li>
+            <li>Конвертер</li>
+            <li>Список дел</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Средний уровень</h4>
+          <ul>
+            <li>Парсер</li>
+            <li>Телеграм-бот</li>
+            <li>Приложение с SQLite</li>
+            <li>GUI на tkinter</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="cheatsheet">
+      <h2>Шпаргалка</h2>
+
+      <h3>Типы</h3>
+      <pre><code>int, float, str, bool, None
+list, tuple, set, dict</code></pre>
+
+      <h3>Условия</h3>
+      <pre><code>if condition:
+    ...
+elif other_condition:
+    ...
+else:
+    ...</code></pre>
+
+      <h3>Циклы</h3>
+      <pre><code>for x in range(5):
+    print(x)
+
+while True:
+    break</code></pre>
+
+      <h3>Функции</h3>
+      <pre><code>def func(a, b=10):
+    return a + b</code></pre>
+
+      <h3>Списки</h3>
+      <pre><code>items = [1, 2, 3]
+items.append(4)
+items.remove(2)
+items.sort()</code></pre>
+
+      <h3>Словари</h3>
+      <pre><code>user = {"name": "Иван", "age": 25}
+user["city"] = "Москва"
+print(user.get("email"))
+print(user.keys())
+print(user.values())
+print(user.items())</code></pre>
+
+      <h3>Файлы</h3>
+      <pre><code>with open("file.txt", "r", encoding="utf-8") as f:
+    data = f.read()</code></pre>
+
+      <div class="tip">
+        Если тебе нужна действительно “боёвая” шпаргалка,
+        лучше делать её не короткой, а с пояснениями — именно так этот документ и задуман.
+      </div>
+    </section>
+
+    <div class="footer">
+      Python Mega Docs — расширенная русскоязычная HTML-документация
+    </div>
+  </main>
+</div>
+
+<script>
+  document.getElementById('searchInput').addEventListener('keydown', function(e){
+    if(e.key === 'Enter'){
+      const value = this.value.trim();
+      if(value) window.find(value);
+    }
+  });
+
+  document.getElementById('themeBtn').addEventListener('click', () => {
+    document.documentElement.classList.toggle('light');
+  });
+
+  document.querySelectorAll('pre').forEach(pre => {
+    const btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.textContent = 'Копировать';
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(pre.innerText);
+        btn.textContent = 'Скопировано!';
+        setTimeout(() => btn.textContent = 'Копировать', 1200);
+      } catch {
+        btn.textContent = 'Ошибка';
+        setTimeout(() => btn.textContent = 'Копировать', 1200);
+      }
+    });
+    pre.appendChild(btn);
+  });
+</script>
+</body>
+</html>
