@@ -1,0 +1,2136 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎯 Python — Задачи и мини-проекты</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+    --bg-primary: #0d1117;
+    --bg-secondary: #161b22;
+    --bg-tertiary: #1c2333;
+    --bg-code: #1a1e2e;
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+    --text-muted: #6e7681;
+    --accent-blue: #58a6ff;
+    --accent-green: #3fb950;
+    --accent-purple: #bc8cff;
+    --accent-orange: #f0883e;
+    --accent-red: #ff7b72;
+    --accent-yellow: #d29922;
+    --accent-cyan: #39d2c0;
+    --accent-pink: #f778ba;
+    --border-color: #30363d;
+    --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    --shadow-lg: 0 10px 40px rgba(0,0,0,0.4);
+    --shadow-md: 0 4px 20px rgba(0,0,0,0.3);
+}
+body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.7;
+}
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* SIDEBAR */
+.sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 300px; height: 100vh;
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--border-color);
+    overflow-y: auto;
+    z-index: 1000;
+    transition: transform 0.3s ease;
+}
+.sidebar-header {
+    padding: 24px 20px;
+    background: var(--gradient-4);
+    text-align: center;
+    position: sticky; top: 0; z-index: 10;
+}
+.sidebar-header h1 { font-size: 22px; color: #0d1117; text-shadow: 0 1px 1px rgba(255,255,255,0.3); }
+.sidebar-header p { font-size: 12px; color: rgba(13,17,23,0.8); margin-top: 4px; }
+.nav-section { padding: 12px 0; border-bottom: 1px solid var(--border-color); }
+.nav-section-title {
+    padding: 8px 20px; font-size: 11px; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 1px; font-weight: 600;
+}
+.nav-link {
+    display: flex; align-items: center;
+    padding: 8px 20px; color: var(--text-secondary);
+    text-decoration: none; font-size: 13px;
+    transition: all 0.2s; border-left: 3px solid transparent;
+}
+.nav-link:hover { background: var(--bg-tertiary); color: var(--text-primary); border-left-color: var(--accent-green); }
+.nav-icon { margin-right: 8px; }
+.back-link {
+    display: block; margin: 12px 20px;
+    padding: 10px; background: var(--gradient-1);
+    color: white !important; text-align: center;
+    border-radius: 8px; text-decoration: none;
+    font-weight: bold; font-size: 13px;
+}
+
+/* MAIN */
+.main { margin-left: 300px; padding: 40px 60px; max-width: 1200px; }
+.hero {
+    background: var(--gradient-4);
+    padding: 60px 40px; border-radius: 20px;
+    margin-bottom: 40px; text-align: center;
+    color: #0d1117;
+}
+.hero h1 { font-size: 42px; margin-bottom: 10px; }
+.hero p { font-size: 18px; }
+.badges { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.badge {
+    background: rgba(13,17,23,0.2); color: #0d1117;
+    padding: 6px 14px; border-radius: 20px;
+    font-size: 13px; font-weight: 600;
+}
+
+/* SECTION */
+.topic {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 30px; margin-bottom: 24px;
+    box-shadow: var(--shadow-md);
+}
+.topic-header {
+    display: flex; align-items: center; gap: 14px;
+    padding-bottom: 16px; margin-bottom: 20px;
+    border-bottom: 2px solid var(--border-color);
+}
+.topic-number {
+    background: var(--gradient-1);
+    color: white; width: 44px; height: 44px;
+    border-radius: 50%; display: flex;
+    align-items: center; justify-content: center;
+    font-weight: bold; font-size: 16px;
+    flex-shrink: 0;
+}
+.topic-title { font-size: 24px; color: var(--accent-blue); }
+.topic-desc { color: var(--text-secondary); font-size: 14px; margin-top: 4px; }
+
+.task {
+    background: var(--bg-tertiary);
+    border-left: 4px solid var(--accent-green);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 14px 0;
+    position: relative;
+}
+.task.medium { border-left-color: var(--accent-yellow); }
+.task.hard   { border-left-color: var(--accent-red); }
+
+.task-head {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 8px;
+    flex-wrap: wrap; gap: 8px;
+}
+.task-title { font-weight: bold; color: var(--text-primary); font-size: 15px; }
+.task-level {
+    font-size: 11px; padding: 3px 10px;
+    border-radius: 12px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.5px;
+}
+.task-level.easy   { background: rgba(63,185,80,0.2);  color: var(--accent-green); }
+.task-level.medium { background: rgba(210,153,34,0.2); color: var(--accent-yellow); }
+.task-level.hard   { background: rgba(255,123,114,0.2); color: var(--accent-red); }
+
+.task-body { color: var(--text-secondary); font-size: 14px; }
+.task-example {
+    background: var(--bg-code);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 8px;
+    font-family: 'Consolas','Monaco',monospace;
+    font-size: 13px;
+    color: var(--accent-cyan);
+    white-space: pre-wrap;
+}
+
+details.solution {
+    margin-top: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--bg-code);
+}
+details.solution summary {
+    cursor: pointer; padding: 8px 14px;
+    font-weight: 600; color: var(--accent-purple);
+    user-select: none; font-size: 13px;
+}
+details.solution summary:hover { color: var(--accent-pink); }
+details.solution[open] summary { border-bottom: 1px solid var(--border-color); }
+.solution pre {
+    padding: 14px;
+    font-family: 'Consolas','Monaco',monospace;
+    font-size: 13px; line-height: 1.6;
+    color: #e6edf3; overflow-x: auto;
+}
+.solution .kw  { color: var(--accent-red); font-weight: bold; }
+.solution .st  { color: var(--accent-cyan); }
+.solution .nm  { color: var(--accent-orange); }
+.solution .cm  { color: var(--text-muted); font-style: italic; }
+.solution .fn  { color: var(--accent-blue); }
+.solution .cl  { color: var(--accent-yellow); }
+
+/* PROJECTS */
+.projects-header {
+    background: var(--gradient-2);
+    padding: 40px; border-radius: 16px;
+    margin: 40px 0 24px;
+    text-align: center;
+    color: white;
+}
+.projects-header h2 { font-size: 32px; margin-bottom: 8px; }
+
+.project {
+    background: var(--bg-secondary);
+    border: 2px solid var(--accent-purple);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 24px rgba(188,140,255,0.15);
+}
+.project-head {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 14px;
+}
+.project-icon { font-size: 36px; }
+.project-title { font-size: 22px; color: var(--accent-purple); }
+.project-tags { margin: 10px 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.project-tag {
+    background: var(--bg-tertiary);
+    color: var(--accent-cyan);
+    padding: 3px 10px; border-radius: 12px;
+    font-size: 11px; font-weight: 600;
+}
+.project p { color: var(--text-secondary); margin: 8px 0; font-size: 14px; }
+.project h4 {
+    color: var(--accent-yellow);
+    margin: 14px 0 6px;
+    font-size: 15px;
+}
+.project ul { padding-left: 22px; color: var(--text-secondary); font-size: 14px; }
+.project ul li { margin: 4px 0; }
+
+/* COMBO */
+.combo-section {
+    background: var(--gradient-3);
+    padding: 30px; border-radius: 14px;
+    margin: 30px 0 20px;
+    color: #0d1117;
+    text-align: center;
+}
+.combo-section h2 { font-size: 28px; }
+
+.progress-bar {
+    position: fixed; top: 0; left: 0; height: 4px;
+    background: var(--gradient-4);
+    z-index: 9999; transition: width 0.2s;
+}
+
+.mobile-toggle {
+    display: none;
+    position: fixed; top: 16px; left: 16px;
+    z-index: 1001;
+    background: var(--gradient-4);
+    border: none; color: #0d1117;
+    padding: 10px 14px; border-radius: 8px;
+    cursor: pointer; font-weight: bold;
+}
+
+@media (max-width: 1024px) {
+    .sidebar { transform: translateX(-100%); }
+    .sidebar.open { transform: translateX(0); }
+    .main { margin-left: 0; padding: 60px 20px 40px; }
+    .mobile-toggle { display: block; }
+    .hero h1 { font-size: 28px; }
+}
+
+.footer {
+    text-align: center; padding: 40px 20px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border-color);
+    margin-top: 40px;
+}
+.footer a { color: var(--accent-green); text-decoration: none; }
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px; margin: 30px 0;
+}
+.stat {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px; padding: 20px;
+    text-align: center;
+}
+.stat-num { font-size: 32px; font-weight: bold; color: var(--accent-green); }
+.stat-label { font-size: 13px; color: var(--text-muted); }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<button class="mobile-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">☰ Меню</button>
+
+<nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <h1>🎯 Задачи Python</h1>
+        <p>100+ задач • 10 мини-проектов</p>
+    </div>
+
+    <a href="шпора2.html" class="back-link">← К документации</a>
+
+    <div class="nav-section">
+        <div class="nav-section-title">📘 По темам</div>
+        <a href="#t-basics" class="nav-link"><span class="nav-icon">🚀</span> Основы (1-6)</a>
+        <a href="#t-numbers" class="nav-link"><span class="nav-icon">🔢</span> Числа и типы (7-10)</a>
+        <a href="#t-operators" class="nav-link"><span class="nav-icon">⚙️</span> Операторы (11-14)</a>
+        <a href="#t-flow" class="nav-link"><span class="nav-icon">🔀</span> Управление (15-18)</a>
+        <a href="#t-collections" class="nav-link"><span class="nav-icon">📋</span> Коллекции (19-25)</a>
+        <a href="#t-functions" class="nav-link"><span class="nav-icon">🔧</span> Функции (26-31)</a>
+        <a href="#t-strings" class="nav-link"><span class="nav-icon">📝</span> Строки (32-34)</a>
+        <a href="#t-files" class="nav-link"><span class="nav-icon">📂</span> Файлы (35-37)</a>
+        <a href="#t-errors" class="nav-link"><span class="nav-icon">⚠️</span> Ошибки (38-40)</a>
+        <a href="#t-oop" class="nav-link"><span class="nav-icon">🏗️</span> ООП (41-48)</a>
+        <a href="#t-modules" class="nav-link"><span class="nav-icon">🧩</span> Модули (49-51)</a>
+        <a href="#t-advanced" class="nav-link"><span class="nav-icon">⚡</span> Продвинутое (52-57)</a>
+        <a href="#t-stdlib" class="nav-link"><span class="nav-icon">📚</span> Stdlib (58-63)</a>
+        <a href="#t-modern" class="nav-link"><span class="nav-icon">🔥</span> Современный (67-71)</a>
+        <a href="#t-libs" class="nav-link"><span class="nav-icon">🧰</span> Модули+ (72-77)</a>
+        <a href="#t-pro" class="nav-link"><span class="nav-icon">🚀</span> Профи (78-80)</a>
+    </div>
+
+    <div class="nav-section">
+        <div class="nav-section-title">🧩 Комбо-задачи</div>
+        <a href="#combo" class="nav-link"><span class="nav-icon">🎲</span> Совмещённые</a>
+    </div>
+
+    <div class="nav-section">
+        <div class="nav-section-title">🏆 Мини-проекты</div>
+        <a href="#projects" class="nav-link"><span class="nav-icon">📋</span> Все проекты</a>
+        <a href="#p1" class="nav-link"><span class="nav-icon">💰</span> 1. Бюджет</a>
+        <a href="#p2" class="nav-link"><span class="nav-icon">📒</span> 2. Заметки CLI</a>
+        <a href="#p3" class="nav-link"><span class="nav-icon">🎮</span> 3. Угадай число</a>
+        <a href="#p4" class="nav-link"><span class="nav-icon">🌤️</span> 4. Погода</a>
+        <a href="#p5" class="nav-link"><span class="nav-icon">📚</span> 5. Библиотека</a>
+        <a href="#p6" class="nav-link"><span class="nav-icon">🎵</span> 6. Плеер</a>
+        <a href="#p7" class="nav-link"><span class="nav-icon">🛒</span> 7. Магазин</a>
+        <a href="#p8" class="nav-link"><span class="nav-icon">⏰</span> 8. Таймер Pomodoro</a>
+        <a href="#p9" class="nav-link"><span class="nav-icon">🔐</span> 9. Менеджер паролей</a>
+        <a href="#p10" class="nav-link"><span class="nav-icon">🤖</span> 10. Чат-бот</a>
+    </div>
+</nav>
+
+<div class="main">
+
+    <section class="hero">
+        <h1>🎯 Python: Задачи и проекты</h1>
+        <p>Полный сборник задач по каждой теме из шпаргалки. Решай, проверяй, расти!</p>
+        <div class="badges">
+            <span class="badge">📝 100+ задач</span>
+            <span class="badge">🧩 15 комбо-задач</span>
+            <span class="badge">🏆 10 мини-проектов</span>
+            <span class="badge">💡 Решения внутри</span>
+        </div>
+    </section>
+
+    <div class="stats">
+        <div class="stat"><div class="stat-num">100+</div><div class="stat-label">задач по темам</div></div>
+        <div class="stat"><div class="stat-num">15</div><div class="stat-label">комбо-задач</div></div>
+        <div class="stat"><div class="stat-num">10</div><div class="stat-label">мини-проектов</div></div>
+        <div class="stat"><div class="stat-num">3</div><div class="stat-label">уровня сложности</div></div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- БЛОК 1: ОСНОВЫ -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div class="topic" id="t-basics">
+        <div class="topic-header">
+            <div class="topic-number">1-6</div>
+            <div>
+                <div class="topic-title">🚀 Основы: print, ввод-вывод, переменные</div>
+                <div class="topic-desc">Темы 1-6 — первые шаги. Учимся выводить, читать, хранить.</div>
+            </div>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">1.1 Hello, World</div><span class="task-level easy">легко</span></div>
+            <div class="task-body">Выведи на экран «Привет, мир!» на трёх строках разными способами (один <code>print</code>, три <code>print</code>, через <code>\n</code>).</div>
+            <details class="solution"><summary>💡 Показать решение</summary>
+<pre><span class="cm"># Способ 1</span>
+<span class="fn">print</span>(<span class="st">"Привет,\nмир!\nКруто!"</span>)
+
+<span class="cm"># Способ 2</span>
+<span class="fn">print</span>(<span class="st">"Привет,"</span>)
+<span class="fn">print</span>(<span class="st">"мир!"</span>)
+<span class="fn">print</span>(<span class="st">"Круто!"</span>)
+
+<span class="cm"># Способ 3 (один print, sep)</span>
+<span class="fn">print</span>(<span class="st">"Привет,"</span>, <span class="st">"мир!"</span>, <span class="st">"Круто!"</span>, sep=<span class="st">"\n"</span>)</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">1.2 Знакомство</div><span class="task-level easy">легко</span></div>
+            <div class="task-body">Спроси имя и возраст пользователя и выведи: «Привет, Аня! Через 10 лет тебе будет 35».</div>
+            <div class="task-example">Ввод:  Аня / 25
+Вывод: Привет, Аня! Через 10 лет тебе будет 35</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre>name = <span class="fn">input</span>(<span class="st">"Имя: "</span>)
+age  = <span class="fn">int</span>(<span class="fn">input</span>(<span class="st">"Возраст: "</span>))
+<span class="fn">print</span>(<span class="st">f"Привет, </span>{name}<span class="st">! Через 10 лет тебе будет </span>{age + <span class="nm">10</span>}<span class="st">"</span>)</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">1.3 Площадь прямоугольника</div><span class="task-level easy">легко</span></div>
+            <div class="task-body">Запроси длину и ширину прямоугольника, посчитай площадь и периметр.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre>a = <span class="fn">float</span>(<span class="fn">input</span>(<span class="st">"Длина: "</span>))
+b = <span class="fn">float</span>(<span class="fn">input</span>(<span class="st">"Ширина: "</span>))
+<span class="fn">print</span>(<span class="st">f"Площадь: </span>{a * b}<span class="st">"</span>)
+<span class="fn">print</span>(<span class="st">f"Периметр: </span>{<span class="nm">2</span> * (a + b)}<span class="st">"</span>)</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">1.4 Конвертер валюты</div><span class="task-level easy">легко</span></div>
+            <div class="task-body">Запроси сумму в рублях и курс доллара. Выведи сумму в долларах.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre>rub  = <span class="fn">float</span>(<span class="fn">input</span>(<span class="st">"Рубли: "</span>))
+rate = <span class="fn">float</span>(<span class="fn">input</span>(<span class="st">"Курс: "</span>))
+<span class="fn">print</span>(<span class="st">f"</span>{rub / rate:.2f}<span class="st"> $"</span>)</pre>
+            </details>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- БЛОК 2: ЧИСЛА И ТИПЫ -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div class="topic" id="t-numbers">
+        <div class="topic-header">
+            <div class="topic-number">7-10</div>
+            <div>
+                <div class="topic-title">🔢 Числа, строки (основы), преобразования</div>
+                <div class="topic-desc">Темы 7-10 — работа с числами и преобразованиями типов.</div>
+            </div>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">2.1 Среднее трёх чисел</div><span class="task-level easy">легко</span></div>
+            <div class="task-body">Запроси у пользователя 3 числа через пробел в одной строке. Выведи их среднее арифметическое.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre>nums = <span class="fn">input</span>(<span class="st">"3 числа: "</span>).split()
+a, b, c = <span class="fn">map</span>(<span class="fn">float</span>, nums)
+<span class="fn">print</span>(<span class="st">f"Среднее: </span>{(a + b + c) / <span class="nm">3</span>:.2f}<span class="st">"</span>)</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">2.2 Секунды → ЧЧ:ММ:СС</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">Дано число секунд (например, 3725). Выведи время в формате «1ч 2м 5с».</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre>s = <span class="fn">int</span>(<span class="fn">input</span>(<span class="st">"Секунд: "</span>))
+h = s // <span class="nm">3600</span>
+m = (s % <span class="nm">3600</span>) // <span class="nm">60</span>
+sec = s % <span class="nm">60</span>
+<span class="fn">print</span>(<span class="st">f"</span>{h}<span class="st">ч </span>{m}<span class="st">м </span>{sec}<span class="st">с"</span>)</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">2.3 Сдача в магазине</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">У клиента есть купюра 5000 руб. Сумма покупки — N руб. Выведи сдачу и разложи её на купюры: 1000, 500, 100, 50, 10, 1 (от большей к меньшей).</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre>change = <span class="nm">5000</span> - <span class="fn">int</span>(<span class="fn">input</span>(<span class="st">"Сумма покупки: "</span>))
+<span class="fn">print</span>(<span class="st">f"Сдача: </span>{change}<span class="st">"</span>)
+<span class="kw">for</span> bill <span class="kw">in</span> [<span class="nm">1000</span>, <span class="nm">500</span>, <span class="nm">100</span>, <span class="nm">50</span>, <span class="nm">10</span>, <span class="nm">1</span>]:
+    qty, change = <span class="fn">divmod</span>(change, bill)
+    <span class="kw">if</span> qty:
+        <span class="fn">print</span>(<span class="st">f"  </span>{bill}<span class="st"> × </span>{qty}<span class="st">"</span>)</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">2.4 Дискриминант</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">Реши квадратное уравнение ax² + bx + c = 0. Учти все три случая: 2 корня, 1 корень, нет корней.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">from</span> math <span class="kw">import</span> sqrt
+a, b, c = <span class="fn">map</span>(<span class="fn">float</span>, <span class="fn">input</span>(<span class="st">"a b c: "</span>).split())
+d = b**<span class="nm">2</span> - <span class="nm">4</span>*a*c
+<span class="kw">if</span> d &gt; <span class="nm">0</span>:
+    <span class="fn">print</span>((-b + sqrt(d))/(<span class="nm">2</span>*a), (-b - sqrt(d))/(<span class="nm">2</span>*a))
+<span class="kw">elif</span> d == <span class="nm">0</span>:
+    <span class="fn">print</span>(-b / (<span class="nm">2</span>*a))
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="st">"Нет корней"</span>)</pre>
+            </details>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- БЛОК 3: ОПЕРАТОРЫ -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div class="topic" id="t-operators">
+        <div class="topic-header">
+            <div class="topic-number">11-14</div>
+            <div>
+                <div class="topic-title">⚙️ Арифметические, сравнения, логические</div>
+                <div class="topic-desc">Темы 11-14 — операторы.</div>
+            </div>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">3.1 Чётность</div><span class="task-level easy">легко</span></div>
+            <div class="task-body">Выведи True, если число чётное и больше 0.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre>n = <span class="fn">int</span>(<span class="fn">input</span>())
+<span class="fn">print</span>(n &gt; <span class="nm">0</span> <span class="kw">and</span> n % <span class="nm">2</span> == <span class="nm">0</span>)</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">3.2 Точка в круге</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">Дана точка (x, y) и радиус R. Определи, находится ли точка внутри круга с центром в начале координат.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre>x, y, r = <span class="fn">map</span>(<span class="fn">float</span>, <span class="fn">input</span>().split())
+<span class="fn">print</span>(<span class="st">"внутри"</span> <span class="kw">if</span> x**<span class="nm">2</span> + y**<span class="nm">2</span> &lt;= r**<span class="nm">2</span> <span class="kw">else</span> <span class="st">"снаружи"</span>)</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">3.3 Треугольник</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">Даны три стороны. Можно ли построить треугольник? (любая сторона меньше суммы двух других)</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre>a, b, c = <span class="fn">map</span>(<span class="fn">float</span>, <span class="fn">input</span>().split())
+<span class="kw">if</span> a + b &gt; c <span class="kw">and</span> a + c &gt; b <span class="kw">and</span> b + c &gt; a:
+    <span class="fn">print</span>(<span class="st">"Можно"</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="st">"Нельзя"</span>)</pre>
+            </details>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- БЛОК 4: УПРАВЛЕНИЕ ПОТОКОМ -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div class="topic" id="t-flow">
+        <div class="topic-header">
+            <div class="topic-number">15-18</div>
+            <div>
+                <div class="topic-title">🔀 if/else, for, while, break/continue</div>
+                <div class="topic-desc">Темы 15-18 — управляем потоком выполнения.</div>
+            </div>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">4.1 FizzBuzz (классика собеседований!)</div><span class="task-level easy">легко</span></div>
+            <div class="task-body">Числа от 1 до 100. Кратные 3 → «Fizz». Кратные 5 → «Buzz». Кратные и 3, и 5 → «FizzBuzz». Остальные — само число.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">1</span>, <span class="nm">101</span>):
+    <span class="kw">if</span> i % <span class="nm">15</span> == <span class="nm">0</span>: <span class="fn">print</span>(<span class="st">"FizzBuzz"</span>)
+    <span class="kw">elif</span> i % <span class="nm">3</span> == <span class="nm">0</span>: <span class="fn">print</span>(<span class="st">"Fizz"</span>)
+    <span class="kw">elif</span> i % <span class="nm">5</span> == <span class="nm">0</span>: <span class="fn">print</span>(<span class="st">"Buzz"</span>)
+    <span class="kw">else</span>: <span class="fn">print</span>(i)</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">4.2 Факториал</div><span class="task-level easy">легко</span></div>
+            <div class="task-body">Посчитай n! без использования math.factorial.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre>n = <span class="fn">int</span>(<span class="fn">input</span>())
+result = <span class="nm">1</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">2</span>, n + <span class="nm">1</span>):
+    result *= i
+<span class="fn">print</span>(result)</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">4.3 Простое число</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">Проверь, является ли число простым.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre>n = <span class="fn">int</span>(<span class="fn">input</span>())
+<span class="kw">if</span> n &lt; <span class="nm">2</span>:
+    <span class="fn">print</span>(<span class="st">"Не простое"</span>)
+<span class="kw">else</span>:
+    is_prime = <span class="kw">True</span>
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">2</span>, <span class="fn">int</span>(n**<span class="nm">0.5</span>) + <span class="nm">1</span>):
+        <span class="kw">if</span> n % i == <span class="nm">0</span>:
+            is_prime = <span class="kw">False</span>
+            <span class="kw">break</span>
+    <span class="fn">print</span>(<span class="st">"Простое"</span> <span class="kw">if</span> is_prime <span class="kw">else</span> <span class="st">"Составное"</span>)</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">4.4 Числа Фибоначчи</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">Выведи первые N чисел Фибоначчи: 0, 1, 1, 2, 3, 5, 8, ...</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre>n = <span class="fn">int</span>(<span class="fn">input</span>())
+a, b = <span class="nm">0</span>, <span class="nm">1</span>
+<span class="kw">for</span> _ <span class="kw">in</span> <span class="fn">range</span>(n):
+    <span class="fn">print</span>(a, end=<span class="st">" "</span>)
+    a, b = b, a + b</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">4.5 Сумма цифр числа</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">Найди сумму цифр числа (например, 12345 → 1+2+3+4+5 = 15). Без преобразования в строку!</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre>n = <span class="fn">int</span>(<span class="fn">input</span>())
+total = <span class="nm">0</span>
+<span class="kw">while</span> n &gt; <span class="nm">0</span>:
+    total += n % <span class="nm">10</span>
+    n //= <span class="nm">10</span>
+<span class="fn">print</span>(total)</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">4.6 Таблица умножения</div><span class="task-level easy">легко</span></div>
+            <div class="task-body">Выведи таблицу умножения 9×9.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">1</span>, <span class="nm">10</span>):
+    <span class="kw">for</span> j <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">1</span>, <span class="nm">10</span>):
+        <span class="fn">print</span>(<span class="st">f"</span>{i*j:4d}<span class="st">"</span>, end=<span class="st">""</span>)
+    <span class="fn">print</span>()</pre>
+            </details>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- БЛОК 5: КОЛЛЕКЦИИ -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div class="topic" id="t-collections">
+        <div class="topic-header">
+            <div class="topic-number">19-25</div>
+            <div>
+                <div class="topic-title">📋 Списки, кортежи, множества, словари</div>
+                <div class="topic-desc">Темы 19-25 — структуры данных.</div>
+            </div>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">5.1 Реверс списка</div><span class="task-level easy">легко</span></div>
+            <div class="task-body">Дан список чисел. Выведи его в обратном порядке (двумя способами).</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre>lst = [<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>]
+<span class="fn">print</span>(lst[::-<span class="nm">1</span>])           <span class="cm"># срез</span>
+<span class="fn">print</span>(<span class="fn">list</span>(<span class="fn">reversed</span>(lst)))   <span class="cm"># reversed()</span></pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">5.2 Уникальные элементы</div><span class="task-level easy">легко</span></div>
+            <div class="task-body">Удали дубликаты из списка, сохранив порядок.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre>lst = [<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">1</span>, <span class="nm">4</span>, <span class="nm">3</span>]
+seen = <span class="fn">set</span>()
+result = [x <span class="kw">for</span> x <span class="kw">in</span> lst <span class="kw">if</span> <span class="kw">not</span> (x <span class="kw">in</span> seen <span class="kw">or</span> seen.add(x))]
+<span class="fn">print</span>(result)  <span class="cm"># [1, 2, 3, 4]</span>
+
+<span class="cm"># Или (Python 3.7+, dict сохраняет порядок):</span>
+<span class="fn">print</span>(<span class="fn">list</span>(<span class="fn">dict</span>.fromkeys(lst)))</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">5.3 Min, Max, Avg, Sum</div><span class="task-level easy">легко</span></div>
+            <div class="task-body">Дан список чисел. Найди минимум, максимум, сумму и среднее.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre>lst = [<span class="nm">3</span>, <span class="nm">1</span>, <span class="nm">7</span>, <span class="nm">9</span>, <span class="nm">2</span>, <span class="nm">5</span>]
+<span class="fn">print</span>(<span class="fn">min</span>(lst), <span class="fn">max</span>(lst), <span class="fn">sum</span>(lst), <span class="fn">sum</span>(lst)/<span class="fn">len</span>(lst))</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">5.4 Подсчёт слов</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">Дана строка. Создай словарь, где ключ — слово, значение — сколько раз встречается.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre>text = <span class="st">"мама мыла раму мама готовила"</span>
+counts = {}
+<span class="kw">for</span> word <span class="kw">in</span> text.split():
+    counts[word] = counts.get(word, <span class="nm">0</span>) + <span class="nm">1</span>
+<span class="fn">print</span>(counts)
+<span class="cm"># {'мама': 2, 'мыла': 1, 'раму': 1, 'готовила': 1}</span></pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">5.5 Пересечение и объединение</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">Даны два списка. Найди общие элементы и все уникальные.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre>a = [<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>]
+b = [<span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>, <span class="nm">6</span>]
+<span class="fn">print</span>(<span class="fn">set</span>(a) &amp; <span class="fn">set</span>(b))   <span class="cm"># {3, 4} — пересечение</span>
+<span class="fn">print</span>(<span class="fn">set</span>(a) | <span class="fn">set</span>(b))   <span class="cm"># {1,2,3,4,5,6} — объединение</span>
+<span class="fn">print</span>(<span class="fn">set</span>(a) - <span class="fn">set</span>(b))   <span class="cm"># {1, 2} — только в a</span></pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">5.6 Топ-3 слова</div><span class="task-level hard">сложно</span></div>
+            <div class="task-body">В тексте найди 3 самых частых слова.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">from</span> collections <span class="kw">import</span> Counter
+text = <span class="st">"a b c a b a d e a b c"</span>
+<span class="fn">print</span>(Counter(text.split()).most_common(<span class="nm">3</span>))
+<span class="cm"># [('a', 4), ('b', 3), ('c', 2)]</span></pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">5.7 Транспонирование матрицы</div><span class="task-level hard">сложно</span></div>
+            <div class="task-body">Дана матрица [[1,2,3],[4,5,6],[7,8,9]]. Получи транспонированную.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre>m = [[<span class="nm">1</span>,<span class="nm">2</span>,<span class="nm">3</span>], [<span class="nm">4</span>,<span class="nm">5</span>,<span class="nm">6</span>], [<span class="nm">7</span>,<span class="nm">8</span>,<span class="nm">9</span>]]
+t = [<span class="fn">list</span>(row) <span class="kw">for</span> row <span class="kw">in</span> <span class="fn">zip</span>(*m)]
+<span class="fn">print</span>(t)  <span class="cm"># [[1,4,7], [2,5,8], [3,6,9]]</span></pre>
+            </details>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- БЛОК 6: ФУНКЦИИ -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div class="topic" id="t-functions">
+        <div class="topic-header">
+            <div class="topic-number">26-31</div>
+            <div>
+                <div class="topic-title">🔧 Функции, аргументы, lambda, scope</div>
+                <div class="topic-desc">Темы 26-31 — функции — основной инструмент программиста.</div>
+            </div>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">6.1 Калькулятор</div><span class="task-level easy">легко</span></div>
+            <div class="task-body">Напиши 4 функции: add, sub, mul, div. Учти деление на ноль.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">def</span> <span class="fn">add</span>(a, b): <span class="kw">return</span> a + b
+<span class="kw">def</span> <span class="fn">sub</span>(a, b): <span class="kw">return</span> a - b
+<span class="kw">def</span> <span class="fn">mul</span>(a, b): <span class="kw">return</span> a * b
+<span class="kw">def</span> <span class="fn">div</span>(a, b):
+    <span class="kw">if</span> b == <span class="nm">0</span>: <span class="kw">return</span> <span class="st">"Ошибка: деление на 0"</span>
+    <span class="kw">return</span> a / b</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">6.2 Палиндром</div><span class="task-level easy">легко</span></div>
+            <div class="task-body">Функция is_palindrome(s) возвращает True, если строка читается одинаково с обеих сторон.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">def</span> <span class="fn">is_palindrome</span>(s):
+    s = s.lower().replace(<span class="st">" "</span>, <span class="st">""</span>)
+    <span class="kw">return</span> s == s[::-<span class="nm">1</span>]
+
+<span class="fn">print</span>(is_palindrome(<span class="st">"А роза упала на лапу Азора"</span>))  <span class="cm"># True</span></pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">6.3 Рекурсивный факториал</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">Реализуй factorial(n) через рекурсию.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">def</span> <span class="fn">factorial</span>(n):
+    <span class="kw">return</span> <span class="nm">1</span> <span class="kw">if</span> n &lt;= <span class="nm">1</span> <span class="kw">else</span> n * factorial(n - <span class="nm">1</span>)</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">6.4 *args средний</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">Функция принимает любое количество чисел и возвращает их среднее.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">def</span> <span class="fn">avg</span>(*args):
+    <span class="kw">return</span> <span class="fn">sum</span>(args) / <span class="fn">len</span>(args) <span class="kw">if</span> args <span class="kw">else</span> <span class="nm">0</span>
+
+<span class="fn">print</span>(avg(<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>))  <span class="cm"># 3.0</span></pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">6.5 Lambda + sorted</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">Список словарей: [{«name»:«Аня»,«age»:25}, …]. Отсортируй по возрасту.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre>users = [{<span class="st">"name"</span>: <span class="st">"Аня"</span>, <span class="st">"age"</span>: <span class="nm">25</span>},
+         {<span class="st">"name"</span>: <span class="st">"Боря"</span>, <span class="st">"age"</span>: <span class="nm">19</span>},
+         {<span class="st">"name"</span>: <span class="st">"Вика"</span>, <span class="st">"age"</span>: <span class="nm">31</span>}]
+<span class="fn">print</span>(<span class="fn">sorted</span>(users, key=<span class="kw">lambda</span> u: u[<span class="st">"age"</span>]))</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">6.6 Замыкание-счётчик</div><span class="task-level hard">сложно</span></div>
+            <div class="task-body">Функция counter() возвращает новую функцию. При каждом её вызове счётчик увеличивается.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">def</span> <span class="fn">counter</span>():
+    n = <span class="nm">0</span>
+    <span class="kw">def</span> <span class="fn">inc</span>():
+        <span class="kw">nonlocal</span> n
+        n += <span class="nm">1</span>
+        <span class="kw">return</span> n
+    <span class="kw">return</span> inc
+
+c = counter()
+<span class="fn">print</span>(c(), c(), c())  <span class="cm"># 1 2 3</span></pre>
+            </details>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- БЛОК 7: СТРОКИ -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div class="topic" id="t-strings">
+        <div class="topic-header">
+            <div class="topic-number">32-34</div>
+            <div>
+                <div class="topic-title">📝 Методы строк, форматирование, f-строки</div>
+                <div class="topic-desc">Темы 32-34 — манипуляции со строками.</div>
+            </div>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">7.1 Подсчёт гласных</div><span class="task-level easy">легко</span></div>
+            <div class="task-body">Посчитай количество гласных в строке (аеёиоуыэюя).</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre>s = <span class="fn">input</span>().lower()
+vowels = <span class="st">"аеёиоуыэюя"</span>
+<span class="fn">print</span>(<span class="fn">sum</span>(<span class="nm">1</span> <span class="kw">for</span> ch <span class="kw">in</span> s <span class="kw">if</span> ch <span class="kw">in</span> vowels))</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">7.2 Заглавная каждое слово</div><span class="task-level easy">легко</span></div>
+            <div class="task-body">«привет, мир» → «Привет, Мир».</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="fn">print</span>(<span class="st">"привет, мир"</span>.title())</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">7.3 Шифр Цезаря</div><span class="task-level hard">сложно</span></div>
+            <div class="task-body">Сдвинь каждую латинскую букву на N позиций. «abc» → 1 → «bcd».</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">def</span> <span class="fn">caesar</span>(s, shift):
+    result = <span class="st">""</span>
+    <span class="kw">for</span> ch <span class="kw">in</span> s:
+        <span class="kw">if</span> ch.isalpha():
+            base = <span class="fn">ord</span>(<span class="st">'A'</span>) <span class="kw">if</span> ch.isupper() <span class="kw">else</span> <span class="fn">ord</span>(<span class="st">'a'</span>)
+            result += <span class="fn">chr</span>((<span class="fn">ord</span>(ch) - base + shift) % <span class="nm">26</span> + base)
+        <span class="kw">else</span>:
+            result += ch
+    <span class="kw">return</span> result
+
+<span class="fn">print</span>(caesar(<span class="st">"Hello, World!"</span>, <span class="nm">3</span>))  <span class="cm"># Khoor, Zruog!</span></pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">7.4 Красивый прайс</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">Список товаров (название, цена). Распечатай таблицу с выравниванием.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre>items = [(<span class="st">"Хлеб"</span>, <span class="nm">45</span>), (<span class="st">"Молоко"</span>, <span class="nm">89</span>), (<span class="st">"Сыр"</span>, <span class="nm">320</span>)]
+<span class="kw">for</span> name, price <span class="kw">in</span> items:
+    <span class="fn">print</span>(<span class="st">f"</span>{name:&lt;15}<span class="st">  </span>{price:&gt;6}<span class="st"> ₽"</span>)</pre>
+            </details>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- БЛОК 8: ФАЙЛЫ -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div class="topic" id="t-files">
+        <div class="topic-header">
+            <div class="topic-number">35-37</div>
+            <div>
+                <div class="topic-title">📂 Чтение, запись, with</div>
+                <div class="topic-desc">Темы 35-37 — работа с файлами.</div>
+            </div>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">8.1 Подсчёт строк</div><span class="task-level easy">легко</span></div>
+            <div class="task-body">Открой файл и посчитай количество строк.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">with</span> <span class="fn">open</span>(<span class="st">"file.txt"</span>, encoding=<span class="st">"utf-8"</span>) <span class="kw">as</span> f:
+    <span class="fn">print</span>(<span class="fn">sum</span>(<span class="nm">1</span> <span class="kw">for</span> _ <span class="kw">in</span> f))</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">8.2 Дневник</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">Записывай каждую введённую строку в файл diary.txt с датой.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">from</span> datetime <span class="kw">import</span> datetime
+note = <span class="fn">input</span>(<span class="st">"Запись: "</span>)
+<span class="kw">with</span> <span class="fn">open</span>(<span class="st">"diary.txt"</span>, <span class="st">"a"</span>, encoding=<span class="st">"utf-8"</span>) <span class="kw">as</span> f:
+    f.write(<span class="st">f"[</span>{datetime.now():%Y-%m-%d %H:%M}<span class="st">] </span>{note}<span class="st">\n"</span>)</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">8.3 Копировать файл</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">Скопируй содержимое одного файла в другой.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">with</span> <span class="fn">open</span>(<span class="st">"src.txt"</span>, <span class="st">"r"</span>, encoding=<span class="st">"utf-8"</span>) <span class="kw">as</span> src, \
+     <span class="fn">open</span>(<span class="st">"dst.txt"</span>, <span class="st">"w"</span>, encoding=<span class="st">"utf-8"</span>) <span class="kw">as</span> dst:
+    dst.write(src.read())</pre>
+            </details>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- БЛОК 9: ОШИБКИ -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div class="topic" id="t-errors">
+        <div class="topic-header">
+            <div class="topic-number">38-40</div>
+            <div>
+                <div class="topic-title">⚠️ try/except/finally, raise</div>
+                <div class="topic-desc">Темы 38-40 — обработка исключений.</div>
+            </div>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">9.1 Безопасный ввод</div><span class="task-level easy">легко</span></div>
+            <div class="task-body">Запрашивай число, пока пользователь не введёт корректное.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">while</span> <span class="kw">True</span>:
+    <span class="kw">try</span>:
+        n = <span class="fn">int</span>(<span class="fn">input</span>(<span class="st">"Число: "</span>))
+        <span class="kw">break</span>
+    <span class="kw">except</span> ValueError:
+        <span class="fn">print</span>(<span class="st">"Не число, попробуй ещё."</span>)
+<span class="fn">print</span>(<span class="st">f"Принято: </span>{n}<span class="st">"</span>)</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">9.2 Своё исключение</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">Создай исключение NegativeAgeError. Выбрасывай его, если возраст &lt; 0.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">class</span> <span class="cl">NegativeAgeError</span>(Exception): <span class="kw">pass</span>
+
+<span class="kw">def</span> <span class="fn">set_age</span>(age):
+    <span class="kw">if</span> age &lt; <span class="nm">0</span>:
+        <span class="kw">raise</span> NegativeAgeError(<span class="st">f"Возраст не может быть </span>{age}<span class="st">"</span>)
+    <span class="kw">return</span> age
+
+<span class="kw">try</span>:
+    set_age(-<span class="nm">5</span>)
+<span class="kw">except</span> NegativeAgeError <span class="kw">as</span> e:
+    <span class="fn">print</span>(e)</pre>
+            </details>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- БЛОК 10: ООП -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div class="topic" id="t-oop">
+        <div class="topic-header">
+            <div class="topic-number">41-48</div>
+            <div>
+                <div class="topic-title">🏗️ Классы, наследование, инкапсуляция, property</div>
+                <div class="topic-desc">Темы 41-48 — объектно-ориентированное программирование.</div>
+            </div>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">10.1 Класс Машина</div><span class="task-level easy">легко</span></div>
+            <div class="task-body">Создай класс Car с полями brand, model, year. Метод info() выводит «Toyota Camry, 2020».</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">class</span> <span class="cl">Car</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, brand, model, year):
+        self.brand = brand
+        self.model = model
+        self.year = year
+    <span class="kw">def</span> <span class="fn">info</span>(self):
+        <span class="fn">print</span>(<span class="st">f"</span>{self.brand}<span class="st"> </span>{self.model}<span class="st">, </span>{self.year}<span class="st">"</span>)
+
+Car(<span class="st">"Toyota"</span>, <span class="st">"Camry"</span>, <span class="nm">2020</span>).info()</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">10.2 Наследование: Animal → Dog/Cat</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">Создай базовый класс Animal и наследников Dog, Cat. У каждого свой звук через метод speak().</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">class</span> <span class="cl">Animal</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, name):
+        self.name = name
+    <span class="kw">def</span> <span class="fn">speak</span>(self):
+        <span class="kw">raise</span> NotImplementedError
+
+<span class="kw">class</span> <span class="cl">Dog</span>(Animal):
+    <span class="kw">def</span> <span class="fn">speak</span>(self): <span class="kw">return</span> <span class="st">"Гав!"</span>
+
+<span class="kw">class</span> <span class="cl">Cat</span>(Animal):
+    <span class="kw">def</span> <span class="fn">speak</span>(self): <span class="kw">return</span> <span class="st">"Мяу!"</span>
+
+<span class="kw">for</span> a <span class="kw">in</span> [Dog(<span class="st">"Шарик"</span>), Cat(<span class="st">"Барсик"</span>)]:
+    <span class="fn">print</span>(<span class="st">f"</span>{a.name}<span class="st">: </span>{a.speak()}<span class="st">"</span>)</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">10.3 BankAccount + инкапсуляция</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">Счёт с приватным балансом. Методы deposit, withdraw (с проверкой), get_balance.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">class</span> <span class="cl">BankAccount</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, owner, balance=<span class="nm">0</span>):
+        self.owner = owner
+        self.__balance = balance
+    <span class="kw">def</span> <span class="fn">deposit</span>(self, amount):
+        self.__balance += amount
+    <span class="kw">def</span> <span class="fn">withdraw</span>(self, amount):
+        <span class="kw">if</span> amount &gt; self.__balance:
+            <span class="kw">raise</span> ValueError(<span class="st">"Недостаточно средств"</span>)
+        self.__balance -= amount
+    <span class="kw">def</span> <span class="fn">get_balance</span>(self):
+        <span class="kw">return</span> self.__balance
+
+acc = BankAccount(<span class="st">"Аня"</span>, <span class="nm">1000</span>)
+acc.deposit(<span class="nm">500</span>)
+acc.withdraw(<span class="nm">300</span>)
+<span class="fn">print</span>(acc.get_balance())  <span class="cm"># 1200</span></pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">10.4 Магические __str__, __eq__, __len__</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">Создай класс Book с полями title, pages. Реализуй __str__ (красивый вывод), __eq__ (книги равны при равных названиях), __len__ (возвращает pages).</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">class</span> <span class="cl">Book</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, title, pages):
+        self.title = title
+        self.pages = pages
+    <span class="kw">def</span> <span class="fn">__str__</span>(self):
+        <span class="kw">return</span> <span class="st">f'«</span>{self.title}<span class="st">», </span>{self.pages}<span class="st"> стр.'</span>
+    <span class="kw">def</span> <span class="fn">__eq__</span>(self, other):
+        <span class="kw">return</span> self.title == other.title
+    <span class="kw">def</span> <span class="fn">__len__</span>(self):
+        <span class="kw">return</span> self.pages
+
+b = Book(<span class="st">"1984"</span>, <span class="nm">328</span>)
+<span class="fn">print</span>(b)        <span class="cm"># «1984», 328 стр.</span>
+<span class="fn">print</span>(<span class="fn">len</span>(b))   <span class="cm"># 328</span></pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">10.5 @property</div><span class="task-level hard">сложно</span></div>
+            <div class="task-body">Класс Temperature с температурой в Цельсиях. Свойство fahrenheit преобразует к Фаренгейтам.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">class</span> <span class="cl">Temperature</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, c):
+        self.celsius = c
+    <span class="nm">@property</span>
+    <span class="kw">def</span> <span class="fn">fahrenheit</span>(self):
+        <span class="kw">return</span> self.celsius * <span class="nm">9</span>/<span class="nm">5</span> + <span class="nm">32</span>
+    <span class="nm">@fahrenheit.setter</span>
+    <span class="kw">def</span> <span class="fn">fahrenheit</span>(self, f):
+        self.celsius = (f - <span class="nm">32</span>) * <span class="nm">5</span>/<span class="nm">9</span>
+
+t = Temperature(<span class="nm">100</span>)
+<span class="fn">print</span>(t.fahrenheit)   <span class="cm"># 212.0</span>
+t.fahrenheit = <span class="nm">32</span>
+<span class="fn">print</span>(t.celsius)      <span class="cm"># 0.0</span></pre>
+            </details>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- БЛОК 11: МОДУЛИ -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div class="topic" id="t-modules">
+        <div class="topic-header">
+            <div class="topic-number">49-51</div>
+            <div>
+                <div class="topic-title">🧩 import, пакеты, pip</div>
+                <div class="topic-desc">Темы 49-51 — модули и пакеты.</div>
+            </div>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">11.1 Свой модуль</div><span class="task-level easy">легко</span></div>
+            <div class="task-body">Создай файл <code>geometry.py</code> с функциями circle_area(r) и rect_area(a,b). Импортируй и используй.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="cm"># geometry.py</span>
+<span class="kw">from</span> math <span class="kw">import</span> pi
+<span class="kw">def</span> <span class="fn">circle_area</span>(r): <span class="kw">return</span> pi * r ** <span class="nm">2</span>
+<span class="kw">def</span> <span class="fn">rect_area</span>(a, b): <span class="kw">return</span> a * b
+
+<span class="cm"># main.py</span>
+<span class="kw">from</span> geometry <span class="kw">import</span> circle_area, rect_area
+<span class="fn">print</span>(circle_area(<span class="nm">5</span>))
+<span class="fn">print</span>(rect_area(<span class="nm">3</span>, <span class="nm">4</span>))</pre>
+            </details>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- БЛОК 12: ПРОДВИНУТОЕ -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div class="topic" id="t-advanced">
+        <div class="topic-header">
+            <div class="topic-number">52-57</div>
+            <div>
+                <div class="topic-title">⚡ Comprehensions, генераторы, декораторы</div>
+                <div class="topic-desc">Темы 52-57 — продвинутые конструкции Python.</div>
+            </div>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">12.1 List comprehension</div><span class="task-level easy">легко</span></div>
+            <div class="task-body">В одну строку: список квадратов чётных чисел от 1 до 20.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="fn">print</span>([x**<span class="nm">2</span> <span class="kw">for</span> x <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">1</span>, <span class="nm">21</span>) <span class="kw">if</span> x % <span class="nm">2</span> == <span class="nm">0</span>])</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">12.2 Dict comprehension</div><span class="task-level easy">легко</span></div>
+            <div class="task-body">Из списка слов сделай словарь {слово: длина}.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre>words = [<span class="st">"привет"</span>, <span class="st">"мир"</span>, <span class="st">"Python"</span>]
+<span class="fn">print</span>({w: <span class="fn">len</span>(w) <span class="kw">for</span> w <span class="kw">in</span> words})</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">12.3 Генератор Фибоначчи</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">Сделай бесконечный генератор Фибоначчи через yield.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">def</span> <span class="fn">fib_gen</span>():
+    a, b = <span class="nm">0</span>, <span class="nm">1</span>
+    <span class="kw">while</span> <span class="kw">True</span>:
+        <span class="kw">yield</span> a
+        a, b = b, a + b
+
+g = fib_gen()
+<span class="fn">print</span>([<span class="fn">next</span>(g) <span class="kw">for</span> _ <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">10</span>)])
+<span class="cm"># [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]</span></pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">12.4 Декоратор @timer</div><span class="task-level hard">сложно</span></div>
+            <div class="task-body">Напиши декоратор, измеряющий время выполнения функции.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">import</span> time
+<span class="kw">from</span> functools <span class="kw">import</span> wraps
+
+<span class="kw">def</span> <span class="fn">timer</span>(func):
+    <span class="nm">@wraps</span>(func)
+    <span class="kw">def</span> <span class="fn">wrapper</span>(*args, **kwargs):
+        t = time.perf_counter()
+        result = func(*args, **kwargs)
+        <span class="fn">print</span>(<span class="st">f"</span>{func.__name__}<span class="st">: </span>{time.perf_counter()-t:.4f}<span class="st">s"</span>)
+        <span class="kw">return</span> result
+    <span class="kw">return</span> wrapper
+
+<span class="nm">@timer</span>
+<span class="kw">def</span> <span class="fn">slow</span>():
+    time.sleep(<span class="nm">1</span>)
+slow()</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">12.5 map / filter</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">Дан список цен. Используя map и filter, оставь только &gt; 100 и добавь к каждой НДС 20%.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre>prices = [<span class="nm">50</span>, <span class="nm">120</span>, <span class="nm">200</span>, <span class="nm">90</span>, <span class="nm">500</span>]
+result = <span class="fn">list</span>(<span class="fn">map</span>(<span class="kw">lambda</span> p: p * <span class="nm">1.2</span>, <span class="fn">filter</span>(<span class="kw">lambda</span> p: p &gt; <span class="nm">100</span>, prices)))
+<span class="fn">print</span>(result)  <span class="cm"># [144.0, 240.0, 600.0]</span></pre>
+            </details>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- БЛОК 13: STDLIB -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div class="topic" id="t-stdlib">
+        <div class="topic-header">
+            <div class="topic-number">58-63</div>
+            <div>
+                <div class="topic-title">📚 os, datetime, json, random, math, re</div>
+                <div class="topic-desc">Темы 58-63 — стандартная библиотека.</div>
+            </div>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">13.1 Дата через N дней</div><span class="task-level easy">легко</span></div>
+            <div class="task-body">Какая дата будет через 100 дней?</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">from</span> datetime <span class="kw">import</span> date, timedelta
+<span class="fn">print</span>(date.today() + timedelta(days=<span class="nm">100</span>))</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">13.2 Случайный пароль</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">Сгенерируй пароль из 12 символов: буквы, цифры, спецсимволы.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">import</span> random, string
+chars = string.ascii_letters + string.digits + <span class="st">"!@#$%^&amp;*"</span>
+<span class="fn">print</span>(<span class="st">""</span>.join(random.choices(chars, k=<span class="nm">12</span>)))</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">13.3 JSON сохранение/чтение</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">Сохрани список пользователей в JSON-файл, потом прочитай обратно.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">import</span> json
+
+users = [{<span class="st">"name"</span>: <span class="st">"Аня"</span>, <span class="st">"age"</span>: <span class="nm">25</span>}, {<span class="st">"name"</span>: <span class="st">"Боря"</span>, <span class="st">"age"</span>: <span class="nm">30</span>}]
+<span class="kw">with</span> <span class="fn">open</span>(<span class="st">"users.json"</span>, <span class="st">"w"</span>, encoding=<span class="st">"utf-8"</span>) <span class="kw">as</span> f:
+    json.dump(users, f, ensure_ascii=<span class="kw">False</span>, indent=<span class="nm">2</span>)
+
+<span class="kw">with</span> <span class="fn">open</span>(<span class="st">"users.json"</span>, encoding=<span class="st">"utf-8"</span>) <span class="kw">as</span> f:
+    <span class="fn">print</span>(json.load(f))</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">13.4 Regex: email</div><span class="task-level hard">сложно</span></div>
+            <div class="task-body">Извлеки все email-адреса из текста.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">import</span> re
+text = <span class="st">"Пиши на <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="90e4f5e3e4d0fdf1f9fcbee2e5">[email&#160;protected]</a> или <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1776737a7e7957726f767a677b723974787a">[email&#160;protected]</a>, не пиши на bad@"</span>
+<span class="fn">print</span>(re.findall(<span class="st">r"[\w.+-]+@[\w-]+\.[\w.-]+"</span>, text))</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">13.5 Угадай число (random)</div><span class="task-level easy">легко</span></div>
+            <div class="task-body">Компьютер загадывает число 1-100. Игрок угадывает, программа подсказывает «больше/меньше».</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">import</span> random
+secret = random.randint(<span class="nm">1</span>, <span class="nm">100</span>)
+<span class="kw">while</span> <span class="kw">True</span>:
+    guess = <span class="fn">int</span>(<span class="fn">input</span>(<span class="st">"Угадай (1-100): "</span>))
+    <span class="kw">if</span> guess == secret:
+        <span class="fn">print</span>(<span class="st">"Угадал!"</span>); <span class="kw">break</span>
+    <span class="fn">print</span>(<span class="st">"Больше"</span> <span class="kw">if</span> guess &lt; secret <span class="kw">else</span> <span class="st">"Меньше"</span>)</pre>
+            </details>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- БЛОК 14: СОВРЕМЕННЫЙ PYTHON -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div class="topic" id="t-modern">
+        <div class="topic-header">
+            <div class="topic-number">67-71</div>
+            <div>
+                <div class="topic-title">🔥 Walrus, match/case, dataclass, Enum, ABC</div>
+                <div class="topic-desc">Темы 67-71 — современный Python (3.8+).</div>
+            </div>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">14.1 Walrus в while</div><span class="task-level easy">легко</span></div>
+            <div class="task-body">Через walrus читай команды, пока не введут «exit».</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">while</span> (cmd := <span class="fn">input</span>(<span class="st">"&gt; "</span>)) != <span class="st">"exit"</span>:
+    <span class="fn">print</span>(<span class="st">f"Команда: </span>{cmd}<span class="st">"</span>)</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">14.2 match/case — HTTP</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">Функция получает код HTTP и возвращает категорию: 2xx — «ОК», 4xx — «Клиент», 5xx — «Сервер».</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">def</span> <span class="fn">category</span>(code):
+    <span class="kw">match</span> code // <span class="nm">100</span>:
+        <span class="kw">case</span> <span class="nm">2</span>: <span class="kw">return</span> <span class="st">"ОК"</span>
+        <span class="kw">case</span> <span class="nm">3</span>: <span class="kw">return</span> <span class="st">"Редирект"</span>
+        <span class="kw">case</span> <span class="nm">4</span>: <span class="kw">return</span> <span class="st">"Ошибка клиента"</span>
+        <span class="kw">case</span> <span class="nm">5</span>: <span class="kw">return</span> <span class="st">"Ошибка сервера"</span>
+        <span class="kw">case</span> _: <span class="kw">return</span> <span class="st">"Неизвестно"</span></pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">14.3 @dataclass для Point</div><span class="task-level easy">легко</span></div>
+            <div class="task-body">Создай dataclass Point(x, y) с методом distance до другой точки.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">from</span> dataclasses <span class="kw">import</span> dataclass
+<span class="kw">from</span> math <span class="kw">import</span> hypot
+
+<span class="nm">@dataclass</span>
+<span class="kw">class</span> <span class="cl">Point</span>:
+    x: <span class="fn">float</span>
+    y: <span class="fn">float</span>
+    <span class="kw">def</span> <span class="fn">distance</span>(self, other):
+        <span class="kw">return</span> hypot(self.x - other.x, self.y - other.y)
+
+<span class="fn">print</span>(Point(<span class="nm">0</span>, <span class="nm">0</span>).distance(Point(<span class="nm">3</span>, <span class="nm">4</span>)))  <span class="cm"># 5.0</span></pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">14.4 Enum статусов заказа</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">Создай Enum OrderStatus (NEW, PAID, SHIPPED, DELIVERED). Функция next_status возвращает следующий.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">from</span> enum <span class="kw">import</span> Enum
+
+<span class="kw">class</span> <span class="cl">OrderStatus</span>(Enum):
+    NEW       = <span class="nm">1</span>
+    PAID      = <span class="nm">2</span>
+    SHIPPED   = <span class="nm">3</span>
+    DELIVERED = <span class="nm">4</span>
+
+<span class="kw">def</span> <span class="fn">next_status</span>(s):
+    <span class="kw">return</span> OrderStatus(s.value + <span class="nm">1</span>) <span class="kw">if</span> s.value &lt; <span class="nm">4</span> <span class="kw">else</span> s
+
+<span class="fn">print</span>(next_status(OrderStatus.NEW))  <span class="cm"># OrderStatus.PAID</span></pre>
+            </details>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- БЛОК 15: ПОЛЕЗНЫЕ МОДУЛИ -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div class="topic" id="t-libs">
+        <div class="topic-header">
+            <div class="topic-number">72-77</div>
+            <div>
+                <div class="topic-title">🧰 collections, itertools, functools, pathlib, logging, argparse</div>
+                <div class="topic-desc">Темы 72-77 — инструменты профессионала.</div>
+            </div>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">15.1 Counter — топ букв</div><span class="task-level easy">легко</span></div>
+            <div class="task-body">В строке найди 5 самых частых букв.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">from</span> collections <span class="kw">import</span> Counter
+text = <span class="st">"мама мыла раму"</span>.replace(<span class="st">" "</span>, <span class="st">""</span>)
+<span class="fn">print</span>(Counter(text).most_common(<span class="nm">5</span>))</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">15.2 itertools combinations</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">Из списка [1,2,3,4,5] выведи все пары с суммой = 7.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">from</span> itertools <span class="kw">import</span> combinations
+nums = [<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>]
+<span class="fn">print</span>([p <span class="kw">for</span> p <span class="kw">in</span> combinations(nums, <span class="nm">2</span>) <span class="kw">if</span> <span class="fn">sum</span>(p) == <span class="nm">7</span>])
+<span class="cm"># [(2, 5), (3, 4)]</span></pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">15.3 @lru_cache для Фибоначчи</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">Реализуй рекурсивный fib через @lru_cache и посчитай fib(100).</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">from</span> functools <span class="kw">import</span> lru_cache
+
+<span class="nm">@lru_cache</span>
+<span class="kw">def</span> <span class="fn">fib</span>(n):
+    <span class="kw">return</span> n <span class="kw">if</span> n &lt; <span class="nm">2</span> <span class="kw">else</span> fib(n - <span class="nm">1</span>) + fib(n - <span class="nm">2</span>)
+
+<span class="fn">print</span>(fib(<span class="nm">100</span>))  <span class="cm"># 354224848179261915075 — мгновенно!</span></pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">15.4 pathlib — найти все .py</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">Найди все .py файлы в текущей папке и подпапках. Выведи путь + размер.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">from</span> pathlib <span class="kw">import</span> Path
+<span class="kw">for</span> p <span class="kw">in</span> Path(<span class="st">"."</span>).rglob(<span class="st">"*.py"</span>):
+    <span class="fn">print</span>(<span class="st">f"</span>{p}<span class="st"> — </span>{p.stat().st_size}<span class="st"> б"</span>)</pre>
+            </details>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- БЛОК 16: ПРОФИ -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div class="topic" id="t-pro">
+        <div class="topic-header">
+            <div class="topic-number">78-80</div>
+            <div>
+                <div class="topic-title">🚀 asyncio, тестирование, typing</div>
+                <div class="topic-desc">Темы 78-80 — высокий уровень.</div>
+            </div>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">16.1 asyncio.gather</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">3 корутины, каждая «работает» 1 сек. Запусти параллельно, чтобы всё заняло ~1 секунду.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">import</span> asyncio
+
+<span class="kw">async</span> <span class="kw">def</span> <span class="fn">task</span>(name, delay):
+    <span class="kw">await</span> asyncio.sleep(delay)
+    <span class="kw">return</span> <span class="st">f"</span>{name}<span class="st"> done"</span>
+
+<span class="kw">async</span> <span class="kw">def</span> <span class="fn">main</span>():
+    results = <span class="kw">await</span> asyncio.gather(
+        task(<span class="st">"A"</span>, <span class="nm">1</span>), task(<span class="st">"B"</span>, <span class="nm">1</span>), task(<span class="st">"C"</span>, <span class="nm">1</span>)
+    )
+    <span class="fn">print</span>(results)
+
+asyncio.run(main())</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">16.2 pytest — параметризация</div><span class="task-level hard">сложно</span></div>
+            <div class="task-body">Напиши функцию is_even и тест с параметризацией на 5 кейсов.</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">import</span> pytest
+
+<span class="kw">def</span> <span class="fn">is_even</span>(n): <span class="kw">return</span> n % <span class="nm">2</span> == <span class="nm">0</span>
+
+<span class="nm">@pytest.mark.parametrize</span>(<span class="st">"n,expected"</span>, [
+    (<span class="nm">2</span>, <span class="kw">True</span>), (<span class="nm">3</span>, <span class="kw">False</span>),
+    (<span class="nm">0</span>, <span class="kw">True</span>), (-<span class="nm">4</span>, <span class="kw">True</span>), (<span class="nm">17</span>, <span class="kw">False</span>)
+])
+<span class="kw">def</span> <span class="fn">test_is_even</span>(n, expected):
+    <span class="kw">assert</span> is_even(n) == expected</pre>
+            </details>
+        </div>
+
+        <div class="task">
+            <div class="task-head"><div class="task-title">16.3 Type hints</div><span class="task-level medium">средне</span></div>
+            <div class="task-body">Добавь типы в функцию: имя пользователя (str), список оценок (list[int]) → средний балл (float).</div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">def</span> <span class="fn">avg_score</span>(name: <span class="fn">str</span>, scores: <span class="fn">list</span>[<span class="fn">int</span>]) -&gt; <span class="fn">float</span>:
+    <span class="kw">return</span> <span class="fn">sum</span>(scores) / <span class="fn">len</span>(scores) <span class="kw">if</span> scores <span class="kw">else</span> <span class="nm">0.0</span>
+
+<span class="fn">print</span>(avg_score(<span class="st">"Аня"</span>, [<span class="nm">5</span>, <span class="nm">4</span>, <span class="nm">5</span>, <span class="nm">3</span>]))  <span class="cm"># 4.25</span></pre>
+            </details>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- КОМБО-ЗАДАЧИ -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div class="combo-section" id="combo">
+        <h2>🧩 Комбо-задачи</h2>
+        <p>Задачи, требующие сразу нескольких тем</p>
+    </div>
+
+    <div class="topic">
+        <div class="task hard">
+            <div class="task-head"><div class="task-title">К1. Анализатор текста</div><span class="task-level hard">комбо</span></div>
+            <div class="task-body">
+                Используя <strong>файлы + словари + строки + Counter</strong>:<br>
+                Прочитай текстовый файл. Выведи: количество строк, слов, символов, топ-5 самых частых слов, среднюю длину слова.
+            </div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">from</span> collections <span class="kw">import</span> Counter
+<span class="kw">from</span> pathlib <span class="kw">import</span> Path
+
+text = Path(<span class="st">"book.txt"</span>).read_text(encoding=<span class="st">"utf-8"</span>)
+words = text.split()
+
+<span class="fn">print</span>(<span class="st">f"Строк:    </span>{<span class="fn">len</span>(text.splitlines())}<span class="st">"</span>)
+<span class="fn">print</span>(<span class="st">f"Слов:     </span>{<span class="fn">len</span>(words)}<span class="st">"</span>)
+<span class="fn">print</span>(<span class="st">f"Символов: </span>{<span class="fn">len</span>(text)}<span class="st">"</span>)
+<span class="fn">print</span>(<span class="st">f"Средн.длина: </span>{<span class="fn">sum</span>(<span class="fn">map</span>(<span class="fn">len</span>, words))/<span class="fn">len</span>(words):.1f}<span class="st">"</span>)
+<span class="fn">print</span>(<span class="st">"Топ-5:"</span>, Counter(words).most_common(<span class="nm">5</span>))</pre>
+            </details>
+        </div>
+
+        <div class="task hard">
+            <div class="task-head"><div class="task-title">К2. Турнирная таблица</div><span class="task-level hard">комбо</span></div>
+            <div class="task-body">
+                <strong>Классы + словари + сортировка + lambda:</strong><br>
+                Класс Player(name, score). Создай 10 игроков с рандомными очками, выведи топ-3 в виде таблицы.
+            </div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">import</span> random
+<span class="kw">from</span> dataclasses <span class="kw">import</span> dataclass
+
+<span class="nm">@dataclass</span>
+<span class="kw">class</span> <span class="cl">Player</span>:
+    name: <span class="fn">str</span>
+    score: <span class="fn">int</span>
+
+names = [<span class="st">"Аня"</span>,<span class="st">"Боря"</span>,<span class="st">"Вика"</span>,<span class="st">"Гена"</span>,<span class="st">"Дима"</span>,
+         <span class="st">"Егор"</span>,<span class="st">"Жора"</span>,<span class="st">"Зоя"</span>,<span class="st">"Иван"</span>,<span class="st">"Кира"</span>]
+players = [Player(n, random.randint(<span class="nm">0</span>, <span class="nm">100</span>)) <span class="kw">for</span> n <span class="kw">in</span> names]
+top3 = <span class="fn">sorted</span>(players, key=<span class="kw">lambda</span> p: -p.score)[:<span class="nm">3</span>]
+
+<span class="kw">for</span> i, p <span class="kw">in</span> <span class="fn">enumerate</span>(top3, <span class="nm">1</span>):
+    <span class="fn">print</span>(<span class="st">f"</span>{i}<span class="st">. </span>{p.name:&lt;6}<span class="st"> — </span>{p.score:&gt;3}<span class="st"> очк."</span>)</pre>
+            </details>
+        </div>
+
+        <div class="task hard">
+            <div class="task-head"><div class="task-title">К3. CSV → JSON</div><span class="task-level hard">комбо</span></div>
+            <div class="task-body">
+                <strong>Файлы + json + comprehensions + обработка ошибок:</strong><br>
+                Прочитай CSV вида «имя,возраст,город» и сохрани как JSON-список словарей.
+            </div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">import</span> csv, json
+<span class="kw">from</span> pathlib <span class="kw">import</span> Path
+
+<span class="kw">try</span>:
+    <span class="kw">with</span> <span class="fn">open</span>(<span class="st">"data.csv"</span>, encoding=<span class="st">"utf-8"</span>) <span class="kw">as</span> f:
+        reader = csv.DictReader(f)
+        data = [row <span class="kw">for</span> row <span class="kw">in</span> reader]
+    Path(<span class="st">"data.json"</span>).write_text(
+        json.dumps(data, ensure_ascii=<span class="kw">False</span>, indent=<span class="nm">2</span>),
+        encoding=<span class="st">"utf-8"</span>
+    )
+    <span class="fn">print</span>(<span class="st">f"OK, записано </span>{<span class="fn">len</span>(data)}<span class="st"> строк"</span>)
+<span class="kw">except</span> FileNotFoundError:
+    <span class="fn">print</span>(<span class="st">"Файл не найден"</span>)</pre>
+            </details>
+        </div>
+
+        <div class="task hard">
+            <div class="task-head"><div class="task-title">К4. Кэширующий декоратор</div><span class="task-level hard">комбо</span></div>
+            <div class="task-body">
+                <strong>Декораторы + замыкания + словари:</strong><br>
+                Напиши свой декоратор @cache (не используя functools), который запоминает результаты функции.
+            </div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">def</span> <span class="fn">cache</span>(func):
+    storage = {}
+    <span class="kw">def</span> <span class="fn">wrapper</span>(*args):
+        <span class="kw">if</span> args <span class="kw">not</span> <span class="kw">in</span> storage:
+            storage[args] = func(*args)
+        <span class="kw">return</span> storage[args]
+    <span class="kw">return</span> wrapper
+
+<span class="nm">@cache</span>
+<span class="kw">def</span> <span class="fn">slow_square</span>(n):
+    <span class="fn">print</span>(<span class="st">f"Вычисляю </span>{n}<span class="st">..."</span>)
+    <span class="kw">return</span> n * n
+
+<span class="fn">print</span>(slow_square(<span class="nm">5</span>))   <span class="cm"># Вычисляю 5... 25</span>
+<span class="fn">print</span>(slow_square(<span class="nm">5</span>))   <span class="cm"># 25 (без вычисления)</span></pre>
+            </details>
+        </div>
+
+        <div class="task hard">
+            <div class="task-head"><div class="task-title">К5. Валидатор регистрации</div><span class="task-level hard">комбо</span></div>
+            <div class="task-body">
+                <strong>Регулярки + исключения + dataclass:</strong><br>
+                Принимай данные: email, телефон, пароль. Валидируй каждое поле. Если не ок — кидай своё исключение.
+            </div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">import</span> re
+<span class="kw">from</span> dataclasses <span class="kw">import</span> dataclass
+
+<span class="kw">class</span> <span class="cl">ValidationError</span>(Exception): <span class="kw">pass</span>
+
+<span class="nm">@dataclass</span>
+<span class="kw">class</span> <span class="cl">User</span>:
+    email: <span class="fn">str</span>
+    phone: <span class="fn">str</span>
+    password: <span class="fn">str</span>
+
+    <span class="kw">def</span> <span class="fn">__post_init__</span>(self):
+        <span class="kw">if</span> <span class="kw">not</span> re.match(<span class="st">r"[\w.+-]+@\w+\.\w+"</span>, self.email):
+            <span class="kw">raise</span> ValidationError(<span class="st">"Плохой email"</span>)
+        <span class="kw">if</span> <span class="kw">not</span> re.match(<span class="st">r"^\+?\d{10,15}$"</span>, self.phone):
+            <span class="kw">raise</span> ValidationError(<span class="st">"Плохой телефон"</span>)
+        <span class="kw">if</span> <span class="fn">len</span>(self.password) &lt; <span class="nm">8</span>:
+            <span class="kw">raise</span> ValidationError(<span class="st">"Пароль короткий"</span>)
+
+<span class="kw">try</span>:
+    u = User(<span class="st">"<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6d0c2d0f431f18">[email&#160;protected]</a>"</span>, <span class="st">"+79991234567"</span>, <span class="st">"qwerty12"</span>)
+    <span class="fn">print</span>(<span class="st">"✅"</span>, u)
+<span class="kw">except</span> ValidationError <span class="kw">as</span> e:
+    <span class="fn">print</span>(<span class="st">"❌"</span>, e)</pre>
+            </details>
+        </div>
+
+        <div class="task hard">
+            <div class="task-head"><div class="task-title">К6. Генератор простых чисел</div><span class="task-level hard">комбо</span></div>
+            <div class="task-body">
+                <strong>Генераторы + itertools + математика:</strong><br>
+                Бесконечный генератор простых чисел. Возьми первые 20.
+            </div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">from</span> itertools <span class="kw">import</span> islice
+
+<span class="kw">def</span> <span class="fn">primes</span>():
+    n = <span class="nm">2</span>
+    <span class="kw">while</span> <span class="kw">True</span>:
+        <span class="kw">if</span> <span class="fn">all</span>(n % i <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">2</span>, <span class="fn">int</span>(n**<span class="nm">0.5</span>) + <span class="nm">1</span>)):
+            <span class="kw">yield</span> n
+        n += <span class="nm">1</span>
+
+<span class="fn">print</span>(<span class="fn">list</span>(islice(primes(), <span class="nm">20</span>)))</pre>
+            </details>
+        </div>
+
+        <div class="task hard">
+            <div class="task-head"><div class="task-title">К7. Магазин с скидками</div><span class="task-level hard">комбо</span></div>
+            <div class="task-body">
+                <strong>ООП + property + наследование:</strong><br>
+                Класс Product. Наследник DiscountedProduct с property final_price (с учётом скидки в %).
+            </div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">class</span> <span class="cl">Product</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, name, price):
+        self.name = name
+        self.price = price
+    <span class="nm">@property</span>
+    <span class="kw">def</span> <span class="fn">final_price</span>(self):
+        <span class="kw">return</span> self.price
+
+<span class="kw">class</span> <span class="cl">DiscountedProduct</span>(Product):
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, name, price, discount):
+        <span class="fn">super</span>().__init__(name, price)
+        self.discount = discount
+    <span class="nm">@property</span>
+    <span class="kw">def</span> <span class="fn">final_price</span>(self):
+        <span class="kw">return</span> self.price * (<span class="nm">1</span> - self.discount / <span class="nm">100</span>)
+
+p = DiscountedProduct(<span class="st">"Куртка"</span>, <span class="nm">5000</span>, <span class="nm">20</span>)
+<span class="fn">print</span>(p.final_price)  <span class="cm"># 4000.0</span></pre>
+            </details>
+        </div>
+
+        <div class="task hard">
+            <div class="task-head"><div class="task-title">К8. Калькулятор статистики</div><span class="task-level hard">комбо</span></div>
+            <div class="task-body">
+                <strong>Функции + словари + сортировка:</strong><br>
+                Функция analyze(numbers) возвращает словарь со статистикой: min, max, mean, median, mode.
+            </div>
+            <details class="solution"><summary>💡 Решение</summary>
+<pre><span class="kw">from</span> collections <span class="kw">import</span> Counter
+<span class="kw">from</span> statistics <span class="kw">import</span> mean, median
+
+<span class="kw">def</span> <span class="fn">analyze</span>(nums):
+    <span class="kw">return</span> {
+        <span class="st">"min"</span>: <span class="fn">min</span>(nums),
+        <span class="st">"max"</span>: <span class="fn">max</span>(nums),
+        <span class="st">"mean"</span>: mean(nums),
+        <span class="st">"median"</span>: median(nums),
+        <span class="st">"mode"</span>: Counter(nums).most_common(<span class="nm">1</span>)[<span class="nm">0</span>][<span class="nm">0</span>]
+    }
+
+<span class="fn">print</span>(analyze([<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>, <span class="nm">5</span>, <span class="nm">5</span>, <span class="nm">9</span>]))</pre>
+            </details>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- МИНИ-ПРОЕКТЫ -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div class="projects-header" id="projects">
+        <h2>🏆 10 мини-проектов</h2>
+        <p>Готовые задания, объединяющие много тем. Идеально для портфолио!</p>
+    </div>
+
+    <div class="project" id="p1">
+        <div class="project-head">
+            <div class="project-icon">💰</div>
+            <div>
+                <div class="project-title">Проект 1. Учёт личного бюджета</div>
+                <div class="project-tags">
+                    <span class="project-tag">файлы</span>
+                    <span class="project-tag">json</span>
+                    <span class="project-tag">datetime</span>
+                    <span class="project-tag">ООП</span>
+                    <span class="project-tag">меню</span>
+                </div>
+            </div>
+        </div>
+        <p>CLI-приложение для записи доходов и расходов с сохранением в JSON-файл.</p>
+
+        <h4>📋 Требования</h4>
+        <ul>
+            <li>Класс <code>Transaction</code> (dataclass): дата, тип (доход/расход), категория, сумма, комментарий</li>
+            <li>Класс <code>Budget</code> со списком транзакций и методами add/remove/save/load</li>
+            <li>Меню: добавить, показать все, баланс, по категориям, выйти</li>
+            <li>Сохранение в <code>budget.json</code></li>
+            <li>Статистика: топ-3 категории расходов</li>
+        </ul>
+
+        <details class="solution"><summary>💡 Скелет решения</summary>
+<pre><span class="kw">import</span> json
+<span class="kw">from</span> dataclasses <span class="kw">import</span> dataclass, asdict, field
+<span class="kw">from</span> datetime <span class="kw">import</span> date
+<span class="kw">from</span> collections <span class="kw">import</span> Counter
+<span class="kw">from</span> pathlib <span class="kw">import</span> Path
+
+FILE = Path(<span class="st">"budget.json"</span>)
+
+<span class="nm">@dataclass</span>
+<span class="kw">class</span> <span class="cl">Transaction</span>:
+    type: <span class="fn">str</span>           <span class="cm"># "income" | "expense"</span>
+    category: <span class="fn">str</span>
+    amount: <span class="fn">float</span>
+    comment: <span class="fn">str</span> = <span class="st">""</span>
+    date: <span class="fn">str</span> = field(default_factory=<span class="kw">lambda</span>: <span class="fn">str</span>(date.today()))
+
+<span class="kw">class</span> <span class="cl">Budget</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(self):
+        self.items: <span class="fn">list</span>[Transaction] = []
+        self.load()
+
+    <span class="kw">def</span> <span class="fn">add</span>(self, t): self.items.append(t); self.save()
+
+    <span class="kw">def</span> <span class="fn">balance</span>(self):
+        s = <span class="fn">sum</span>(t.amount <span class="kw">if</span> t.type == <span class="st">"income"</span> <span class="kw">else</span> -t.amount
+                <span class="kw">for</span> t <span class="kw">in</span> self.items)
+        <span class="kw">return</span> s
+
+    <span class="kw">def</span> <span class="fn">top_categories</span>(self, n=<span class="nm">3</span>):
+        c = Counter()
+        <span class="kw">for</span> t <span class="kw">in</span> self.items:
+            <span class="kw">if</span> t.type == <span class="st">"expense"</span>:
+                c[t.category] += t.amount
+        <span class="kw">return</span> c.most_common(n)
+
+    <span class="kw">def</span> <span class="fn">save</span>(self):
+        FILE.write_text(json.dumps(
+            [asdict(t) <span class="kw">for</span> t <span class="kw">in</span> self.items],
+            ensure_ascii=<span class="kw">False</span>, indent=<span class="nm">2</span>), encoding=<span class="st">"utf-8"</span>)
+
+    <span class="kw">def</span> <span class="fn">load</span>(self):
+        <span class="kw">if</span> FILE.exists():
+            self.items = [Transaction(**d) <span class="kw">for</span> d <span class="kw">in</span> json.loads(FILE.read_text(<span class="st">"utf-8"</span>))]
+
+<span class="kw">def</span> <span class="fn">menu</span>():
+    b = Budget()
+    <span class="kw">while</span> (cmd := <span class="fn">input</span>(<span class="st">"\n[1] добавить [2] баланс [3] топ-категорий [0] выход: "</span>)) != <span class="st">"0"</span>:
+        <span class="kw">match</span> cmd:
+            <span class="kw">case</span> <span class="st">"1"</span>:
+                t = Transaction(
+                    type=<span class="fn">input</span>(<span class="st">"income/expense: "</span>),
+                    category=<span class="fn">input</span>(<span class="st">"категория: "</span>),
+                    amount=<span class="fn">float</span>(<span class="fn">input</span>(<span class="st">"сумма: "</span>)),
+                    comment=<span class="fn">input</span>(<span class="st">"коммент: "</span>),
+                )
+                b.add(t)
+            <span class="kw">case</span> <span class="st">"2"</span>: <span class="fn">print</span>(<span class="st">f"Баланс: </span>{b.balance()}<span class="st">"</span>)
+            <span class="kw">case</span> <span class="st">"3"</span>: <span class="fn">print</span>(b.top_categories())
+
+<span class="kw">if</span> __name__ == <span class="st">"__main__"</span>: menu()</pre>
+        </details>
+    </div>
+
+    <div class="project" id="p2">
+        <div class="project-head">
+            <div class="project-icon">📒</div>
+            <div>
+                <div class="project-title">Проект 2. CLI Заметки</div>
+                <div class="project-tags">
+                    <span class="project-tag">файлы</span>
+                    <span class="project-tag">argparse</span>
+                    <span class="project-tag">pathlib</span>
+                </div>
+            </div>
+        </div>
+        <p>Программа-блокнот с командной строкой: <code>notes add "купить молоко"</code>, <code>notes list</code>, <code>notes del 3</code>.</p>
+        <h4>📋 Требования</h4>
+        <ul>
+            <li>argparse с подкомандами: add, list, del, search</li>
+            <li>Хранение в <code>notes.txt</code> — каждая запись с номером и датой</li>
+            <li>Поиск по подстроке (case-insensitive)</li>
+            <li>Удаление по номеру</li>
+        </ul>
+        <details class="solution"><summary>💡 Скелет</summary>
+<pre><span class="kw">import</span> argparse
+<span class="kw">from</span> pathlib <span class="kw">import</span> Path
+<span class="kw">from</span> datetime <span class="kw">import</span> datetime
+
+FILE = Path(<span class="st">"notes.txt"</span>)
+FILE.touch(exist_ok=<span class="kw">True</span>)
+
+<span class="kw">def</span> <span class="fn">read_notes</span>():
+    <span class="kw">return</span> FILE.read_text(<span class="st">"utf-8"</span>).splitlines()
+
+<span class="kw">def</span> <span class="fn">write_notes</span>(lines):
+    FILE.write_text(<span class="st">"\n"</span>.join(lines) + (<span class="st">"\n"</span> <span class="kw">if</span> lines <span class="kw">else</span> <span class="st">""</span>), <span class="st">"utf-8"</span>)
+
+<span class="kw">def</span> <span class="fn">cmd_add</span>(args):
+    lines = read_notes()
+    lines.append(<span class="st">f"[</span>{datetime.now():%Y-%m-%d %H:%M}<span class="st">] </span>{args.text}<span class="st">"</span>)
+    write_notes(lines)
+
+<span class="kw">def</span> <span class="fn">cmd_list</span>(args):
+    <span class="kw">for</span> i, l <span class="kw">in</span> <span class="fn">enumerate</span>(read_notes(), <span class="nm">1</span>):
+        <span class="fn">print</span>(<span class="st">f"</span>{i}<span class="st">. </span>{l}<span class="st">"</span>)
+
+<span class="kw">def</span> <span class="fn">cmd_del</span>(args):
+    lines = read_notes()
+    <span class="kw">if</span> <span class="nm">1</span> &lt;= args.n &lt;= <span class="fn">len</span>(lines):
+        <span class="kw">del</span> lines[args.n - <span class="nm">1</span>]
+        write_notes(lines)
+
+<span class="kw">def</span> <span class="fn">cmd_search</span>(args):
+    q = args.query.lower()
+    <span class="kw">for</span> i, l <span class="kw">in</span> <span class="fn">enumerate</span>(read_notes(), <span class="nm">1</span>):
+        <span class="kw">if</span> q <span class="kw">in</span> l.lower():
+            <span class="fn">print</span>(<span class="st">f"</span>{i}<span class="st">. </span>{l}<span class="st">"</span>)
+
+parser = argparse.ArgumentParser()
+sub = parser.add_subparsers(dest=<span class="st">"cmd"</span>, required=<span class="kw">True</span>)
+
+p_add = sub.add_parser(<span class="st">"add"</span>);    p_add.add_argument(<span class="st">"text"</span>);    p_add.set_defaults(func=cmd_add)
+p_lst = sub.add_parser(<span class="st">"list"</span>);   p_lst.set_defaults(func=cmd_list)
+p_del = sub.add_parser(<span class="st">"del"</span>);    p_del.add_argument(<span class="st">"n"</span>, <span class="fn">type</span>=<span class="fn">int</span>); p_del.set_defaults(func=cmd_del)
+p_srh = sub.add_parser(<span class="st">"search"</span>); p_srh.add_argument(<span class="st">"query"</span>);   p_srh.set_defaults(func=cmd_search)
+
+args = parser.parse_args()
+args.func(args)</pre>
+        </details>
+    </div>
+
+    <div class="project" id="p3">
+        <div class="project-head">
+            <div class="project-icon">🎮</div>
+            <div>
+                <div class="project-title">Проект 3. «Угадай число» с уровнями</div>
+                <div class="project-tags">
+                    <span class="project-tag">random</span>
+                    <span class="project-tag">while</span>
+                    <span class="project-tag">try/except</span>
+                    <span class="project-tag">файлы</span>
+                </div>
+            </div>
+        </div>
+        <p>Расширенная версия: уровни сложности (1-10 / 1-100 / 1-1000), ограниченное число попыток, таблица рекордов.</p>
+        <h4>📋 Требования</h4>
+        <ul>
+            <li>Игрок выбирает уровень → задаётся диапазон и количество попыток</li>
+            <li>Подсказки больше/меньше + сколько попыток осталось</li>
+            <li>Запись имени и числа попыток в <code>records.json</code></li>
+            <li>Команда «таблица рекордов» — топ-5 игроков</li>
+        </ul>
+    </div>
+
+    <div class="project" id="p4">
+        <div class="project-head">
+            <div class="project-icon">🌤️</div>
+            <div>
+                <div class="project-title">Проект 4. Прогноз погоды (через API)</div>
+                <div class="project-tags">
+                    <span class="project-tag">requests</span>
+                    <span class="project-tag">json</span>
+                    <span class="project-tag">обработка ошибок</span>
+                </div>
+            </div>
+        </div>
+        <p>Скрипт спрашивает город и выводит погоду через бесплатное API <a href="https://open-meteo.com/" target="_blank" style="color:var(--accent-cyan)">open-meteo.com</a> (без ключа!).</p>
+        <h4>📋 Требования</h4>
+        <ul>
+            <li>Геокодинг города → координаты</li>
+            <li>Запрос текущей погоды</li>
+            <li>Красивый вывод: температура, ветер, описание</li>
+            <li>Обработка: нет интернета, город не найден</li>
+        </ul>
+        <details class="solution"><summary>💡 Скелет</summary>
+<pre><span class="kw">import</span> requests   <span class="cm"># pip install requests</span>
+
+<span class="kw">def</span> <span class="fn">geocode</span>(city):
+    r = requests.get(<span class="st">f"https://geocoding-api.open-meteo.com/v1/search?name=</span>{city}<span class="st">"</span>)
+    data = r.json().get(<span class="st">"results"</span>)
+    <span class="kw">if</span> <span class="kw">not</span> data:
+        <span class="kw">raise</span> ValueError(<span class="st">"Город не найден"</span>)
+    <span class="kw">return</span> data[<span class="nm">0</span>][<span class="st">"latitude"</span>], data[<span class="nm">0</span>][<span class="st">"longitude"</span>]
+
+<span class="kw">def</span> <span class="fn">weather</span>(lat, lon):
+    url = <span class="st">f"https://api.open-meteo.com/v1/forecast?latitude=</span>{lat}<span class="st">&amp;longitude=</span>{lon}<span class="st">&amp;current_weather=true"</span>
+    <span class="kw">return</span> requests.get(url).json()[<span class="st">"current_weather"</span>]
+
+<span class="kw">try</span>:
+    city = <span class="fn">input</span>(<span class="st">"Город: "</span>)
+    lat, lon = geocode(city)
+    w = weather(lat, lon)
+    <span class="fn">print</span>(<span class="st">f"🌡 </span>{w[<span class="st">'temperature'</span>]}<span class="st">°C  💨 </span>{w[<span class="st">'windspeed'</span>]}<span class="st"> км/ч"</span>)
+<span class="kw">except</span> <span class="fn">Exception</span> <span class="kw">as</span> e:
+    <span class="fn">print</span>(<span class="st">"Ошибка:"</span>, e)</pre>
+        </details>
+    </div>
+
+    <div class="project" id="p5">
+        <div class="project-head">
+            <div class="project-icon">📚</div>
+            <div>
+                <div class="project-title">Проект 5. Библиотека книг</div>
+                <div class="project-tags">
+                    <span class="project-tag">ООП</span>
+                    <span class="project-tag">наследование</span>
+                    <span class="project-tag">json</span>
+                    <span class="project-tag">меню</span>
+                </div>
+            </div>
+        </div>
+        <p>Учёт книг и читателей. Книгу можно выдать, вернуть, посмотреть, кто читает.</p>
+        <h4>📋 Требования</h4>
+        <ul>
+            <li>Класс <code>Book</code>: title, author, year, available</li>
+            <li>Класс <code>Reader</code>: name, books (список книг)</li>
+            <li>Класс <code>Library</code>: add_book, register_reader, borrow, return_book</li>
+            <li>Сохранение в JSON</li>
+            <li>Поиск книг по автору/году</li>
+        </ul>
+    </div>
+
+    <div class="project" id="p6">
+        <div class="project-head">
+            <div class="project-icon">🎵</div>
+            <div>
+                <div class="project-title">Проект 6. Плейлист</div>
+                <div class="project-tags">
+                    <span class="project-tag">ООП</span>
+                    <span class="project-tag">итераторы</span>
+                    <span class="project-tag">магические методы</span>
+                </div>
+            </div>
+        </div>
+        <p>Класс Playlist с поддержкой <code>len()</code>, <code>in</code>, индексации, перебора в цикле, перемешивания.</p>
+        <h4>📋 Требования</h4>
+        <ul>
+            <li>Класс Song(title, artist, duration)</li>
+            <li>Класс Playlist с __len__, __getitem__, __contains__, __iter__</li>
+            <li>Методы add, remove, shuffle, total_duration</li>
+            <li>__str__ выводит красивый список</li>
+        </ul>
+        <details class="solution"><summary>💡 Скелет</summary>
+<pre><span class="kw">import</span> random
+<span class="kw">from</span> dataclasses <span class="kw">import</span> dataclass
+
+<span class="nm">@dataclass</span>
+<span class="kw">class</span> <span class="cl">Song</span>:
+    title: <span class="fn">str</span>
+    artist: <span class="fn">str</span>
+    duration: <span class="fn">int</span>   <span class="cm"># секунды</span>
+
+<span class="kw">class</span> <span class="cl">Playlist</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, name):
+        self.name = name
+        self.songs: <span class="fn">list</span>[Song] = []
+
+    <span class="kw">def</span> <span class="fn">add</span>(self, song): self.songs.append(song)
+    <span class="kw">def</span> <span class="fn">shuffle</span>(self): random.shuffle(self.songs)
+    <span class="kw">def</span> <span class="fn">total_duration</span>(self): <span class="kw">return</span> <span class="fn">sum</span>(s.duration <span class="kw">for</span> s <span class="kw">in</span> self.songs)
+
+    <span class="kw">def</span> <span class="fn">__len__</span>(self): <span class="kw">return</span> <span class="fn">len</span>(self.songs)
+    <span class="kw">def</span> <span class="fn">__getitem__</span>(self, i): <span class="kw">return</span> self.songs[i]
+    <span class="kw">def</span> <span class="fn">__iter__</span>(self): <span class="kw">return</span> <span class="fn">iter</span>(self.songs)
+    <span class="kw">def</span> <span class="fn">__contains__</span>(self, title):
+        <span class="kw">return</span> <span class="fn">any</span>(s.title == title <span class="kw">for</span> s <span class="kw">in</span> self.songs)
+    <span class="kw">def</span> <span class="fn">__str__</span>(self):
+        lines = [<span class="st">f"🎵 </span>{self.name}<span class="st"> (</span>{<span class="fn">len</span>(self)}<span class="st"> треков)"</span>]
+        <span class="kw">for</span> i, s <span class="kw">in</span> <span class="fn">enumerate</span>(self, <span class="nm">1</span>):
+            lines.append(<span class="st">f"  </span>{i}<span class="st">. </span>{s.artist}<span class="st"> — </span>{s.title}<span class="st"> (</span>{s.duration//<span class="nm">60</span>}<span class="st">:</span>{s.duration%<span class="nm">60</span>:02d}<span class="st">)"</span>)
+        <span class="kw">return</span> <span class="st">"\n"</span>.join(lines)</pre>
+        </details>
+    </div>
+
+    <div class="project" id="p7">
+        <div class="project-head">
+            <div class="project-icon">🛒</div>
+            <div>
+                <div class="project-title">Проект 7. Интернет-магазин (консоль)</div>
+                <div class="project-tags">
+                    <span class="project-tag">ООП</span>
+                    <span class="project-tag">наследование</span>
+                    <span class="project-tag">@property</span>
+                    <span class="project-tag">json</span>
+                </div>
+            </div>
+        </div>
+        <p>Каталог товаров, корзина, оформление заказа.</p>
+        <h4>📋 Требования</h4>
+        <ul>
+            <li>Класс <code>Product</code> и наследник <code>DigitalProduct</code> (без доставки)</li>
+            <li>Класс <code>Cart</code>: add, remove, total (с учётом скидок и доставки)</li>
+            <li>Класс <code>Order</code>: id, items, status (Enum: NEW/PAID/SENT)</li>
+            <li>Сохранение заказов в JSON</li>
+            <li>Промокоды (словарь {код: процент})</li>
+        </ul>
+    </div>
+
+    <div class="project" id="p8">
+        <div class="project-head">
+            <div class="project-icon">⏰</div>
+            <div>
+                <div class="project-title">Проект 8. Pomodoro-таймер</div>
+                <div class="project-tags">
+                    <span class="project-tag">time</span>
+                    <span class="project-tag">datetime</span>
+                    <span class="project-tag">логирование</span>
+                </div>
+            </div>
+        </div>
+        <p>Таймер для техники Pomodoro: 25 мин работы → 5 мин перерыв → повторить. После 4 циклов — длинный перерыв 15 мин.</p>
+        <h4>📋 Требования</h4>
+        <ul>
+            <li>Настраиваемая длительность через argparse</li>
+            <li>Звуковое уведомление в конце (можно через <code>print("\a")</code>)</li>
+            <li>Логирование завершённых сессий в <code>pomodoro.log</code></li>
+            <li>Команда «статистика» — сколько помодоров за день/неделю</li>
+        </ul>
+        <details class="solution"><summary>💡 Скелет</summary>
+<pre><span class="kw">import</span> time, logging
+<span class="kw">from</span> datetime <span class="kw">import</span> datetime
+
+logging.basicConfig(
+    filename=<span class="st">"pomodoro.log"</span>, level=logging.INFO,
+    <span class="fn">format</span>=<span class="st">"%(asctime)s %(message)s"</span>
+)
+
+<span class="kw">def</span> <span class="fn">timer</span>(minutes, label):
+    <span class="fn">print</span>(<span class="st">f"⏱ </span>{label}<span class="st"> — </span>{minutes}<span class="st"> мин"</span>)
+    <span class="kw">for</span> remaining <span class="kw">in</span> <span class="fn">range</span>(minutes * <span class="nm">60</span>, <span class="nm">0</span>, -<span class="nm">1</span>):
+        m, s = <span class="fn">divmod</span>(remaining, <span class="nm">60</span>)
+        <span class="fn">print</span>(<span class="st">f"\r  </span>{m:02d}<span class="st">:</span>{s:02d}<span class="st">"</span>, end=<span class="st">""</span>, flush=<span class="kw">True</span>)
+        time.sleep(<span class="nm">1</span>)
+    <span class="fn">print</span>(<span class="st">"\a\n✅ Готово!"</span>)
+    logging.info(<span class="st">f"</span>{label}<span class="st"> завершён"</span>)
+
+<span class="kw">def</span> <span class="fn">pomodoro</span>(cycles=<span class="nm">4</span>):
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">1</span>, cycles + <span class="nm">1</span>):
+        timer(<span class="nm">25</span>, <span class="st">f"Работа #</span>{i}<span class="st">"</span>)
+        timer(<span class="nm">15</span> <span class="kw">if</span> i == cycles <span class="kw">else</span> <span class="nm">5</span>, <span class="st">"Перерыв"</span>)
+
+pomodoro()</pre>
+        </details>
+    </div>
+
+    <div class="project" id="p9">
+        <div class="project-head">
+            <div class="project-icon">🔐</div>
+            <div>
+                <div class="project-title">Проект 9. Менеджер паролей</div>
+                <div class="project-tags">
+                    <span class="project-tag">json</span>
+                    <span class="project-tag">hashlib</span>
+                    <span class="project-tag">random</span>
+                    <span class="project-tag">ООП</span>
+                </div>
+            </div>
+        </div>
+        <p>Хранилище паролей с мастер-паролем. (для обучения, не для реальной безопасности!)</p>
+        <h4>📋 Требования</h4>
+        <ul>
+            <li>Мастер-пароль (хеш SHA-256 хранится в файле)</li>
+            <li>Добавить / посмотреть / удалить запись (сайт → логин → пароль)</li>
+            <li>Генератор паролей: длина + типы символов</li>
+            <li>Поиск по сайту</li>
+            <li>Простое «шифрование» (XOR с мастер-паролем — для упражнения)</li>
+        </ul>
+    </div>
+
+    <div class="project" id="p10">
+        <div class="project-head">
+            <div class="project-icon">🤖</div>
+            <div>
+                <div class="project-title">Проект 10. Консольный чат-бот</div>
+                <div class="project-tags">
+                    <span class="project-tag">regex</span>
+                    <span class="project-tag">match/case</span>
+                    <span class="project-tag">random</span>
+                    <span class="project-tag">datetime</span>
+                </div>
+            </div>
+        </div>
+        <p>Простой чат-бот, отвечающий на команды и шаблонные вопросы.</p>
+        <h4>📋 Требования</h4>
+        <ul>
+            <li>Понимает: «привет», «как тебя зовут», «который час», «брось монетку», «кубик», «погода в X»</li>
+            <li>Использует regex для определения шаблонов</li>
+            <li>match/case для маршрутизации</li>
+            <li>Запоминает имя пользователя</li>
+            <li>Команда «помощь» — список команд</li>
+        </ul>
+        <details class="solution"><summary>💡 Скелет</summary>
+<pre><span class="kw">import</span> re, random
+<span class="kw">from</span> datetime <span class="kw">import</span> datetime
+
+user_name = <span class="kw">None</span>
+
+<span class="kw">def</span> <span class="fn">reply</span>(msg):
+    <span class="kw">global</span> user_name
+    msg = msg.lower().strip()
+
+    <span class="kw">if</span> m := re.match(<span class="st">r"меня зовут (\w+)"</span>, msg):
+        user_name = m.group(<span class="nm">1</span>).capitalize()
+        <span class="kw">return</span> <span class="st">f"Приятно познакомиться, </span>{user_name}<span class="st">!"</span>
+
+    <span class="kw">match</span> msg:
+        <span class="kw">case</span> <span class="st">"привет"</span> | <span class="st">"здравствуй"</span>:
+            <span class="kw">return</span> <span class="st">f"Привет</span>{<span class="st">', '</span> + user_name <span class="kw">if</span> user_name <span class="kw">else</span> <span class="st">''</span>}<span class="st">!"</span>
+        <span class="kw">case</span> <span class="st">"как тебя зовут"</span>:
+            <span class="kw">return</span> <span class="st">"Я — Робо-Чат 🤖"</span>
+        <span class="kw">case</span> <span class="st">"который час"</span> | <span class="st">"время"</span>:
+            <span class="kw">return</span> datetime.now().strftime(<span class="st">"%H:%M"</span>)
+        <span class="kw">case</span> <span class="st">"монетка"</span>:
+            <span class="kw">return</span> random.choice([<span class="st">"Орёл"</span>, <span class="st">"Решка"</span>])
+        <span class="kw">case</span> <span class="st">"кубик"</span>:
+            <span class="kw">return</span> <span class="fn">str</span>(random.randint(<span class="nm">1</span>, <span class="nm">6</span>))
+        <span class="kw">case</span> <span class="st">"помощь"</span> | <span class="st">"help"</span>:
+            <span class="kw">return</span> <span class="st">"Команды: привет, как тебя зовут, время, монетка, кубик, выход"</span>
+        <span class="kw">case</span> _:
+            <span class="kw">return</span> <span class="st">"Не понял. Напиши 'помощь'."</span>
+
+<span class="kw">while</span> (msg := <span class="fn">input</span>(<span class="st">"&gt; "</span>)) != <span class="st">"выход"</span>:
+    <span class="fn">print</span>(<span class="st">"🤖"</span>, reply(msg))</pre>
+        </details>
+    </div>
+
+    <div class="footer">
+        <p>🎯 <strong>Python — Сборник задач и проектов</strong></p>
+        <p>100+ задач • 8 комбо • 10 мини-проектов</p>
+        <p style="margin-top: 12px;">
+            <a href="шпора2.html">📖 Вернуться к документации</a>
+        </p>
+        <p style="margin-top: 16px; color: var(--text-muted);">
+            Все решения — это <strong>один из вариантов</strong>. Старайся сначала решить сам! 💪
+        </p>
+    </div>
+
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+window.addEventListener('scroll', () => {
+    const sc = document.documentElement.scrollTop;
+    const h  = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    document.getElementById('progressBar').style.width = (sc / h * 100) + '%';
+});
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) { e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); }
+    });
+});
+
+// Закрытие меню при клике (мобила)
+document.querySelectorAll('.sidebar a').forEach(a => {
+    a.addEventListener('click', () => document.getElementById('sidebar').classList.remove('open'));
+});
+</script>
+
+</body>
+</html>
